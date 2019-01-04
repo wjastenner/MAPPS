@@ -110,6 +110,11 @@ public class AlbumCollection {
         }
         return null;
     }
+    
+    // should i make this unmodifable?
+    public ArrayList<Album> getAlbums(){
+        return albums;
+    }
 
     // convert and return album collection as string
     @Override

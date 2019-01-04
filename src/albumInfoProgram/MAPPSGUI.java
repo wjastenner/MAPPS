@@ -1,12 +1,16 @@
+package albumInfoProgram;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mappsGUI;
+
 
 import albumInfoProgram.AlbumCollection;
 import java.io.File;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 
 class MyCustomFilter extends javax.swing.filechooser.FileFilter {
@@ -52,7 +56,7 @@ public class MAPPSGUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        albumCollectionContent = new javax.swing.JList<>();
         jButton2 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -82,12 +86,12 @@ public class MAPPSGUI extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        albumCollectionContent.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(albumCollectionContent);
 
         jButton2.setText("Remove");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +190,13 @@ public class MAPPSGUI extends javax.swing.JFrame {
             AlbumCollection ac = new AlbumCollection();
             ac.read(file);
             ac.sort();
+            ArrayList<Album> albums = ac.getAlbums();
+            DefaultListModel model = new DefaultListModel();
+            albumCollectionContent.setModel(model);
+            for (Album album : albums){
+                String albumDetails = album.getDetails();
+                model.addElement(albumDetails);
+            }
 
         } else {
             System.out.println("File access cancelled by user.");
@@ -237,13 +248,13 @@ public class MAPPSGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> albumCollectionContent;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuBar menuBar;
