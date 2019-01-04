@@ -110,6 +110,10 @@ public class AlbumCollection {
         }
         return null;
     }
+    
+    public ArrayList<Album> getAlbums(){
+        return albums;
+    }
 
     // convert and return album collection as string
     @Override
