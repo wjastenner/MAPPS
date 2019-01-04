@@ -21,3 +21,5 @@ public class AlbumInfoProgram {
 //        System.out.println(playlist.getDuration());
     }
 }
+
+// can i get this working again please?
