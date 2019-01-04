@@ -14,14 +14,13 @@ public class AlbumCollection {
     }
 
     // read method
-    public void read(String fileName) {
+    public void read(File fileName) {
 
         try {
 
             // import, connect and read whole file in
             // Adapted from pg 454 Sierra and Bates, 2005
-            File albumCollection = new File(fileName);
-            FileReader albumCollectionReader = new FileReader(albumCollection);
+            FileReader albumCollectionReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(albumCollectionReader);
 
             String line = null;
