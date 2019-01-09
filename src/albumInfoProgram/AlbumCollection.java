@@ -110,8 +110,8 @@ public class AlbumCollection {
         }
         return null;
     }
-    
-    // should i make this unmodifable?
+
+    // should i make this unmodifiable?
     public ArrayList<Album> getAlbums(){
         return albums;
     }

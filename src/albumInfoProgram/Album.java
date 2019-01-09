@@ -48,6 +48,17 @@ public class Album {
         }
         return duration;
     }
+    
+    // return duration of album
+    public String getDurationStr() {
+
+        Duration duration = new Duration();
+
+        for (Track track : tracks) {
+            duration.add(track.getDuration());
+        }
+        return duration.toString();
+    }
 
     // return duration of specific track within an album (parameter track name)
     public Duration getDuration(String trackName) {
@@ -88,6 +99,10 @@ public class Album {
         return longestTrack;
     }
     
+    public ArrayList<Track> getTracks(){
+        return tracks;
+    }
+    
     // override the equals method. Compares the getDetails method of two albums
     @Override
     public boolean equals(Object other){
@@ -102,12 +117,6 @@ public class Album {
     // convert and return album as string
     @Override
     public String toString() {
-
-        String albumStr = artist + " : " + title + "\n";
-
-        for (Track track : tracks) {
-            albumStr += track + "\n";
-        }
-        return albumStr;
+        return artist + " : " + title;
     }
 }
