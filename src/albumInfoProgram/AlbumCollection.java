@@ -27,23 +27,31 @@ public class AlbumCollection {
             String line = null;
 
             Album album = null;
+            
+            boolean albumExists = false;
 
             // while the reader can read a line in decide whether that line is
             // an album or track
             // if it is an album create a new album
             // if it is a track add that track to the previously created album
             while ((line = reader.readLine()) != null) {
-
                 if (line.contains(" : ")) {
                     album = new Album(line);
-                    albums.add(album);
-                } else {
+                    if(albums.contains(album)){                       
+                        albumExists = true;
+                    } else{
+                        albums.add(album);
+                        albumExists = false;
+                    }
+                } else if (line.contains(" - ") && !albumExists) {                  
                     Track track = new Track(line);
-                    album.addTrack(track);
+                    album.addTrack(track);                   
                 }
             }
+            
+            System.out.println(this);
+            
             reader.close();
-
         } catch (Exception ex) {
             System.out.println("Album collection import was unsuccessful");
         }
@@ -124,7 +132,7 @@ public class AlbumCollection {
         String albumCollectionStr = "";
 
         for (Album album : albums) {
-            albumCollectionStr += album;
+            albumCollectionStr += album + "\n";
         }
         return albumCollectionStr;
     }

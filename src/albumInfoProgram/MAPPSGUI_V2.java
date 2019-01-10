@@ -1,7 +1,6 @@
 package albumInfoProgram;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -11,7 +10,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
-    AlbumCollection ac;
+    AlbumCollection ac = new AlbumCollection();
 
     public MAPPSGUI_V2() {
         initComponents();
@@ -212,35 +211,28 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser(openLocation);
         fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
         fc.setAcceptAllFileFilterUsed(false);
-        int returnVal = fc.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            ac = new AlbumCollection();
-            ac.read(file);
-            ac.sort(); 
-            List<Album> albums = ac.getAlbums();
-            for (Album album : albums) {
-                albumNameCB.addItem(album);
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
+        fc.showOpenDialog(this);
+        File file = fc.getSelectedFile();
+        albumNameCB.removeAllItems();
+        ac.read(file);
+        List<Album> albums = ac.getAlbums();
+        for (Album album : albums) {
+            albumNameCB.addItem(album);
         }
     }//GEN-LAST:event_loadACMIActionPerformed
 
     private void albumNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_albumNameCBItemStateChanged
-        int selectedAlbumIndex = albumNameCB.getSelectedIndex();
-        Album selectedAlbum = albumNameCB.getItemAt(selectedAlbumIndex);
-
-        DefaultListModel tracksListGUI = new DefaultListModel();
-        albumTracksList.setModel(tracksListGUI);
-
-        List<Track> tracks = selectedAlbum.getTracks();
-
-        for (Track track : tracks){
-            tracksListGUI.addElement(track);
+        if (albumNameCB.getItemCount() > 0) {
+            int selectedAlbumIndex = albumNameCB.getSelectedIndex();
+            Album selectedAlbum = albumNameCB.getItemAt(selectedAlbumIndex);
+            DefaultListModel tracksListGUI = new DefaultListModel();
+            albumTracksList.setModel(tracksListGUI);
+            List<Track> tracks = selectedAlbum.getTracks();
+            for (Track track : tracks) {
+                tracksListGUI.addElement(track);
+            }
+            albumDurationLBL.setText("Duration: " + selectedAlbum.getDurationStr());
         }
-
-        albumDurationLBL.setText("Duration: " + selectedAlbum.getDurationStr());
     }//GEN-LAST:event_albumNameCBItemStateChanged
 
     public static void main(String args[]) {
