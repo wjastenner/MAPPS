@@ -27,7 +27,7 @@ public class AlbumCollection {
             String line = null;
 
             Album album = null;
-            
+
             boolean albumExists = false;
 
             // while the reader can read a line in decide whether that line is
@@ -37,20 +37,17 @@ public class AlbumCollection {
             while ((line = reader.readLine()) != null) {
                 if (line.contains(" : ")) {
                     album = new Album(line);
-                    if(albums.contains(album)){                       
+                    if (albums.contains(album)) {
                         albumExists = true;
-                    } else{
+                    } else {
                         albums.add(album);
                         albumExists = false;
                     }
-                } else if (line.contains(" - ") && !albumExists) {                  
+                } else if (line.contains(" - ") && !albumExists) {
                     Track track = new Track(line);
-                    album.addTrack(track);                   
+                    album.addTrack(track);
                 }
             }
-            
-            System.out.println(this);
-            
             reader.close();
         } catch (Exception ex) {
             System.out.println("Album collection import was unsuccessful");
@@ -63,6 +60,12 @@ public class AlbumCollection {
         return this;
     }
 
+    // sorts the AlbumCollection by title
+    public AlbumCollection sortByAlbum() {
+        Collections.sort(albums, comparing(Album::getTitle));
+        return this;
+    }
+    
     // return duration a particular artist
     public Duration getArtistDuration(String artist) {
 
@@ -120,8 +123,8 @@ public class AlbumCollection {
         return null;
     }
 
-    // should i make this unmodifiable?
-    public List<Album> getAlbums(){
+    // return unmodifiable list of albums
+    public List<Album> getAlbums() {
         return Collections.unmodifiableList(albums);
     }
 
