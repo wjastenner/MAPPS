@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import static java.util.Comparator.comparing;
+import java.util.List;
 
 public class AlbumCollection {
 
@@ -112,8 +113,8 @@ public class AlbumCollection {
     }
 
     // should i make this unmodifiable?
-    public ArrayList<Album> getAlbums(){
-        return albums;
+    public List<Album> getAlbums(){
+        return Collections.unmodifiableList(albums);
     }
 
     // convert and return album collection as string
