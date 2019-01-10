@@ -1,6 +1,8 @@
 package albumInfoProgram;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Album {
 
@@ -99,8 +101,8 @@ public class Album {
         return longestTrack;
     }
     
-    public ArrayList<Track> getTracks(){
-        return tracks;
+    public List<Track> getTracks(){
+        return Collections.unmodifiableList(tracks);
     }
     
     // override the equals method. Compares the getDetails method of two albums
