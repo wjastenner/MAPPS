@@ -2,8 +2,6 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.JFileChooser" name="loadFileChooser">
-    </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="fileMenu">
@@ -12,27 +10,74 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="loadACMI">
+            <Menu class="javax.swing.JMenu" name="loadMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Load"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="loadACMI">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Album Collection"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadACMIActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="loadPLMI">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Playlist"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="saveAsMenu">
               <Properties>
                 <Property name="mnemonic" type="int" value="111"/>
-                <Property name="text" type="java.lang.String" value="Load Album Collection"/>
+                <Property name="text" type="java.lang.String" value="Save As"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadACMIActionPerformed"/>
-              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="loadPlaylistMI">
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="editMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Edit"/>
+          </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="editMenuAC">
               <Properties>
-                <Property name="mnemonic" type="int" value="111"/>
-                <Property name="text" type="java.lang.String" value="Load Playlist"/>
+                <Property name="text" type="java.lang.String" value="Album Collection"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="openMenuItem2">
+              <SubComponents>
+                <Menu class="javax.swing.JMenu" name="ACSortMI">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Sort"/>
+                  </Properties>
+                  <SubComponents>
+                    <MenuItem class="javax.swing.JMenuItem" name="SortByAlbumMI">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="By Artist Name"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SortByAlbumMIActionPerformed"/>
+                      </Events>
+                    </MenuItem>
+                    <MenuItem class="javax.swing.JMenuItem" name="SortByArtistMI">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="By Album Title"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SortByArtistMIActionPerformed"/>
+                      </Events>
+                    </MenuItem>
+                  </SubComponents>
+                </Menu>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="editMenuPL">
               <Properties>
-                <Property name="mnemonic" type="int" value="111"/>
-                <Property name="text" type="java.lang.String" value="Save As (Playlist)"/>
+                <Property name="text" type="java.lang.String" value="Playlist"/>
               </Properties>
-            </MenuItem>
+            </Menu>
           </SubComponents>
         </Menu>
       </SubComponents>
@@ -139,7 +184,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="albumNameCB" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="albumDurationLBL" min="-2" max="-2" attributes="0"/>
+                                  <Component id="albumDurationLBL" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">

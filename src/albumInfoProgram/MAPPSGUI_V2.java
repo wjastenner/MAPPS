@@ -20,7 +20,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        loadFileChooser = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         albumDurationLBL = new javax.swing.JLabel();
         albumNameCB = new javax.swing.JComboBox<>();
@@ -37,9 +36,16 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        loadMenu = new javax.swing.JMenu();
         loadACMI = new javax.swing.JMenuItem();
-        loadPlaylistMI = new javax.swing.JMenuItem();
-        openMenuItem2 = new javax.swing.JMenuItem();
+        loadPLMI = new javax.swing.JMenuItem();
+        saveAsMenu = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        editMenuAC = new javax.swing.JMenu();
+        ACSortMI = new javax.swing.JMenu();
+        SortByAlbumMI = new javax.swing.JMenuItem();
+        SortByArtistMI = new javax.swing.JMenuItem();
+        editMenuPL = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -142,7 +148,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(albumNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(albumDurationLBL)))
+                                .addComponent(albumDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -164,24 +170,57 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
-        loadACMI.setMnemonic('o');
-        loadACMI.setText("Load Album Collection");
+        loadMenu.setText("Load");
+
+        loadACMI.setText("Album Collection");
         loadACMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadACMIActionPerformed(evt);
             }
         });
-        fileMenu.add(loadACMI);
+        loadMenu.add(loadACMI);
 
-        loadPlaylistMI.setMnemonic('o');
-        loadPlaylistMI.setText("Load Playlist");
-        fileMenu.add(loadPlaylistMI);
+        loadPLMI.setText("Playlist");
+        loadMenu.add(loadPLMI);
 
-        openMenuItem2.setMnemonic('o');
-        openMenuItem2.setText("Save As (Playlist)");
-        fileMenu.add(openMenuItem2);
+        fileMenu.add(loadMenu);
+
+        saveAsMenu.setMnemonic('o');
+        saveAsMenu.setText("Save As");
+        fileMenu.add(saveAsMenu);
 
         menuBar.add(fileMenu);
+
+        editMenu.setText("Edit");
+
+        editMenuAC.setText("Album Collection");
+
+        ACSortMI.setText("Sort");
+
+        SortByAlbumMI.setText("By Artist Name");
+        SortByAlbumMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortByAlbumMIActionPerformed(evt);
+            }
+        });
+        ACSortMI.add(SortByAlbumMI);
+
+        SortByArtistMI.setText("By Album Title");
+        SortByArtistMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortByArtistMIActionPerformed(evt);
+            }
+        });
+        ACSortMI.add(SortByArtistMI);
+
+        editMenuAC.add(ACSortMI);
+
+        editMenu.add(editMenuAC);
+
+        editMenuPL.setText("Playlist");
+        editMenu.add(editMenuPL);
+
+        menuBar.add(editMenu);
 
         setJMenuBar(menuBar);
 
@@ -205,21 +244,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
-
-        String openLocation = System.getProperty("user.dir");
-        JFileChooser fc = new JFileChooser(openLocation);
-        fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
-        fc.setAcceptAllFileFilterUsed(false);
-        fc.showOpenDialog(this);
-        File file = fc.getSelectedFile();
+    private void addToAlbumNameCB() {
         albumNameCB.removeAllItems();
-        ac.read(file);
         List<Album> albums = ac.getAlbums();
         for (Album album : albums) {
             albumNameCB.addItem(album);
         }
-    }//GEN-LAST:event_loadACMIActionPerformed
+    }
 
     private void albumNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_albumNameCBItemStateChanged
         if (albumNameCB.getItemCount() > 0) {
@@ -234,6 +265,27 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             albumDurationLBL.setText("Duration: " + selectedAlbum.getDurationStr());
         }
     }//GEN-LAST:event_albumNameCBItemStateChanged
+
+    private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
+        String openLocation = System.getProperty("user.dir");
+        JFileChooser fc = new JFileChooser(openLocation);
+        fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.showOpenDialog(this);
+        File file = fc.getSelectedFile();
+        ac.read(file);
+        addToAlbumNameCB();
+    }//GEN-LAST:event_loadACMIActionPerformed
+
+    private void SortByAlbumMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByAlbumMIActionPerformed
+        ac.sort();
+        addToAlbumNameCB();
+    }//GEN-LAST:event_SortByAlbumMIActionPerformed
+
+    private void SortByArtistMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByArtistMIActionPerformed
+        ac.sortByAlbum();
+        addToAlbumNameCB();
+    }//GEN-LAST:event_SortByArtistMIActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -269,10 +321,16 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu ACSortMI;
+    private javax.swing.JMenuItem SortByAlbumMI;
+    private javax.swing.JMenuItem SortByArtistMI;
     private javax.swing.JButton addTrackBTN;
     private javax.swing.JLabel albumDurationLBL;
     private javax.swing.JComboBox<Album> albumNameCB;
     private javax.swing.JList<Album> albumTracksList;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenu editMenuAC;
+    private javax.swing.JMenu editMenuPL;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton5;
@@ -285,10 +343,10 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JMenuItem loadACMI;
-    private javax.swing.JFileChooser loadFileChooser;
-    private javax.swing.JMenuItem loadPlaylistMI;
+    private javax.swing.JMenu loadMenu;
+    private javax.swing.JMenuItem loadPLMI;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem2;
+    private javax.swing.JMenuItem saveAsMenu;
     // End of variables declaration//GEN-END:variables
 
 }
