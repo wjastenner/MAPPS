@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     AlbumCollection ac = new AlbumCollection();
+    String albumCoverDirectory;
 
     public MAPPSGUI_V2() {
         initComponents();
@@ -28,7 +29,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         addTrackBTN = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         albumTracksList = new javax.swing.JList<>();
@@ -46,6 +46,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         SortByAlbumMI = new javax.swing.JMenuItem();
         SortByArtistMI = new javax.swing.JMenuItem();
         editMenuPL = new javax.swing.JMenu();
+        Settings = new javax.swing.JMenu();
+        AlbumCoverLocationMI = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +61,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumNameCB.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         albumNameCB.setMaximumSize(new java.awt.Dimension(200, 30));
         albumNameCB.setMinimumSize(new java.awt.Dimension(200, 30));
+        albumNameCB.setName(""); // NOI18N
         albumNameCB.setPreferredSize(new java.awt.Dimension(200, 30));
         albumNameCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -80,8 +83,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jLabel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
         addTrackBTN.setText("Add Track to Playlist");
-
-        jButton5.setText("Save");
 
         jButton10.setText("Remove Track from Playlist");
 
@@ -111,26 +112,28 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(albumDurationLBL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addTrackBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
-                    .addComponent(albumNameCB, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(albumNameCB, 0, 361, Short.MAX_VALUE)
+                            .addComponent(albumDurationLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addTrackBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1)
-                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane6))
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,26 +145,24 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton5)
-                                    .addComponent(jButton6)))
+                                .addComponent(jButton6))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(albumNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(albumDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(11, 11, 11)
+                                .addComponent(albumDurationLBL)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addTrackBTN)
-                            .addComponent(jButton10)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jButton10))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(addTrackBTN))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -222,6 +223,18 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         menuBar.add(editMenu);
 
+        Settings.setText("Settings");
+
+        AlbumCoverLocationMI.setText("Set Album Cover Location");
+        AlbumCoverLocationMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlbumCoverLocationMIActionPerformed(evt);
+            }
+        });
+        Settings.add(AlbumCoverLocationMI);
+
+        menuBar.add(Settings);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -230,8 +243,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,6 +275,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             for (Track track : tracks) {
                 tracksListGUI.addElement(track);
             }
+            String selectedAlbumTitle = selectedAlbum.getTitle();
+            String selectedAlbumTitleUpperCase = selectedAlbumTitle.toUpperCase();
+            String selectedAlbumTitleUpperCaseStripped = selectedAlbumTitleUpperCase.replaceAll("[^A-Za-z]+", "");
+            System.out.println(selectedAlbumTitleUpperCaseStripped);
+
             albumDurationLBL.setText("Duration: " + selectedAlbum.getDurationStr());
         }
     }//GEN-LAST:event_albumNameCBItemStateChanged
@@ -271,10 +289,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser(openLocation);
         fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
         fc.setAcceptAllFileFilterUsed(false);
-        fc.showOpenDialog(this);
-        File file = fc.getSelectedFile();
-        ac.read(file);
-        addToAlbumNameCB();
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            ac.read(file);
+            addToAlbumNameCB();
+        }
     }//GEN-LAST:event_loadACMIActionPerformed
 
     private void SortByAlbumMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByAlbumMIActionPerformed
@@ -286,6 +306,20 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         ac.sortByAlbum();
         addToAlbumNameCB();
     }//GEN-LAST:event_SortByArtistMIActionPerformed
+
+    private void AlbumCoverLocationMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlbumCoverLocationMIActionPerformed
+
+        String openLocation = System.getProperty("user.dir");
+        JFileChooser fc = new JFileChooser(openLocation);
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setAcceptAllFileFilterUsed(false);
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            albumCoverDirectory = file.getAbsolutePath();
+            System.out.println(albumCoverDirectory);
+        }
+    }//GEN-LAST:event_AlbumCoverLocationMIActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -322,6 +356,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ACSortMI;
+    private javax.swing.JMenuItem AlbumCoverLocationMI;
+    private javax.swing.JMenu Settings;
     private javax.swing.JMenuItem SortByAlbumMI;
     private javax.swing.JMenuItem SortByArtistMI;
     private javax.swing.JButton addTrackBTN;
@@ -333,7 +369,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JMenu editMenuPL;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jList6;
