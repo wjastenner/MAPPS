@@ -50,17 +50,6 @@ public class Album {
         }
         return duration;
     }
-    
-    // return duration of album
-    public String getDurationStr() {
-
-        Duration duration = new Duration();
-
-        for (Track track : tracks) {
-            duration.add(track.getDuration());
-        }
-        return duration.toString();
-    }
 
     // return duration of specific track within an album (parameter track name)
     public Duration getDuration(String trackName) {

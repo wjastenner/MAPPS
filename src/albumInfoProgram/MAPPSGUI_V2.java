@@ -18,7 +18,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     AlbumCollection ac;
-    Playlist currentPlaylist;
     HashMap<String, String> playlists = new HashMap<>();
     String albumCoverDirectory;
 
@@ -110,6 +109,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         playlistNameCB.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         playlistNameCB.setPreferredSize(new java.awt.Dimension(361, 26));
+        playlistNameCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playlistNameCBActionPerformed(evt);
+            }
+        });
 
         jScrollPane7.setPreferredSize(new java.awt.Dimension(200, 132));
 
@@ -282,6 +286,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "The album collection is not in the correct format.");
             }
+            if (!playlists.isEmpty()) {
+                displayPlaylistDetails();
+            }
         }
     }
 
@@ -324,7 +331,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             albumCoverImgLBL.setHorizontalAlignment(JLabel.CENTER);
             albumCoverImgLBL.setVerticalAlignment(JLabel.CENTER);
             albumCoverImgLBL.setIcon(new ImageIcon(albumCoverImgEdit));
-            albumDurationLBL.setText("Duration: " + selectedAlbum.getDurationStr());
+
+            String albumDuration = selectedAlbum.getDuration().toString();
+            albumDurationLBL.setText("Duration: " + albumDuration);
         }
     }
 
@@ -357,37 +366,37 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }
 
-    public void displayPlaylistNames() {
+    public void displayPlaylistNames() {       
         if (!playlists.isEmpty()) {
+            playlistNameCB.removeAllItems();
             for (HashMap.Entry<String, String> playlist : playlists.entrySet()) {
                 String playlistName = playlist.getKey();
-                playlistNameCB.addItem(playlistName);
+                String playlistNameEdit = playlistName.substring(0, (playlistName.length() - 4));
+                playlistNameCB.addItem(playlistNameEdit);
             }
         }
     }
 
-    private void setCurrentPlaylist(){
-        
-    }
-    
     private void displayPlaylistDetails() {
 
         int CBPlaylistIndex = playlistNameCB.getSelectedIndex();
-        String CBPlaylist = playlistNameCB.getItemAt(CBPlaylistIndex);
-        
+        String CBPlaylist = playlistNameCB.getItemAt(CBPlaylistIndex) + ".txt";
+
         String playlistDirectory = playlists.get(CBPlaylist);
         File playlistFile = new File(playlistDirectory);
-        
+
         Playlist playlist = new Playlist(ac);
         boolean playlistValid = playlist.read(playlistFile);
- 
-        if(playlistValid){
+
+        if (playlistValid) {
             List<PlaylistTrack> tracks = playlist.getTracks();
             DefaultListModel tracksListGUI = new DefaultListModel();
             playlistTracksList.setModel(tracksListGUI);
             for (PlaylistTrack track : tracks) {
                 tracksListGUI.addElement(track);
             }
+            String playlistDuration = playlist.getDuration().toString();
+            playlistDurationLBL.setText("Duration: " + playlistDuration);
         }
     }
 
@@ -439,6 +448,10 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private void loadPLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPLMIActionPerformed
         loadPL();
     }//GEN-LAST:event_loadPLMIActionPerformed
+
+    private void playlistNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playlistNameCBActionPerformed
+        displayPlaylistDetails();
+    }//GEN-LAST:event_playlistNameCBActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
