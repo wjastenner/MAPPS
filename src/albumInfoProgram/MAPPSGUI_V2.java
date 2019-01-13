@@ -18,6 +18,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     AlbumCollection ac;
+    Playlist currentPlaylist;
     HashMap<String, String> playlists = new HashMap<>();
     String albumCoverDirectory;
 
@@ -365,12 +366,16 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }
 
+    private void setCurrentPlaylist(){
+        
+    }
+    
     private void displayPlaylistDetails() {
 
-        int selectedPlaylistIndex = playlistNameCB.getSelectedIndex();
-        String selectedPlaylist = playlistNameCB.getItemAt(selectedPlaylistIndex);
+        int CBPlaylistIndex = playlistNameCB.getSelectedIndex();
+        String CBPlaylist = playlistNameCB.getItemAt(CBPlaylistIndex);
         
-        String playlistDirectory = playlists.get(selectedPlaylist);
+        String playlistDirectory = playlists.get(CBPlaylist);
         File playlistFile = new File(playlistDirectory);
         
         Playlist playlist = new Playlist(ac);
