@@ -18,13 +18,11 @@ public class Playlist {
     }
 
     // constructor taking in an album collection and the playlist file name
-    public void read(String fileName) {
+    public void read(File playlist) {
 
         try {
-
             // import, connect and read whole file in
             // Adapted from pg 454 Sierra and Bates, 2005
-            File playlist = new File(fileName);
             FileReader playlistReader = new FileReader(playlist);
             BufferedReader reader = new BufferedReader(playlistReader);
 
@@ -34,14 +32,10 @@ public class Playlist {
             // Use the track name and album to get track duration
             // create new PlaylistTrack and add it to ArrayList tracks
             while ((line = reader.readLine()) != null) {
-
                 PlaylistTrack track = CreatePlaylistTrack(line);
-
                 tracks.add(track);
             }
-
             reader.close();
-
         } catch (Exception ex) {
             System.out.println("Playlist import was unsuccessful");
         }

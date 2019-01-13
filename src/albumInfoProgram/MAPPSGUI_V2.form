@@ -27,6 +27,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Playlist"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadPLMIActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -85,12 +88,12 @@
             <Property name="text" type="java.lang.String" value="Settings"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="AlbumCoverLocationMI">
+            <MenuItem class="javax.swing.JMenuItem" name="albumCoverLocationMI">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Set Album Cover Location"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AlbumCoverLocationMIActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="albumCoverLocationMIActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -179,7 +182,7 @@
                                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jComboBox1" max="32767" attributes="0"/>
+                                  <Component id="playlistNameCB" max="32767" attributes="0"/>
                                   <Component id="albumDurationLBL1" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -194,7 +197,7 @@
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                          <Component id="playlistNameCB" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Component id="albumDurationLBL1" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -358,15 +361,10 @@
             <Property name="text" type="java.lang.String" value="Remove Track from Playlist"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="playlistNameCB">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[361, 26]"/>

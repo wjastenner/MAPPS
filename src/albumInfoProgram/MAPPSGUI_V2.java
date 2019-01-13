@@ -1,12 +1,16 @@
 package albumInfoProgram;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("unchecked")
@@ -14,6 +18,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     AlbumCollection ac;
+    HashMap<String, String> playlists = new HashMap<>();
     String albumCoverDirectory;
 
     public MAPPSGUI_V2() {
@@ -37,7 +42,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumTracksList = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jButton10 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        playlistNameCB = new javax.swing.JComboBox<>();
         albumDurationLBL1 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -52,7 +57,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         SortByArtistMI = new javax.swing.JMenuItem();
         editMenuPL = new javax.swing.JMenu();
         Settings = new javax.swing.JMenu();
-        AlbumCoverLocationMI = new javax.swing.JMenuItem();
+        albumCoverLocationMI = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,8 +114,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         jButton10.setText("Remove Track from Playlist");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(361, 26));
+        playlistNameCB.setPreferredSize(new java.awt.Dimension(361, 26));
 
         albumDurationLBL1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         albumDurationLBL1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -143,7 +147,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                                 .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                                 .addGap(13, 13, 13))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(playlistNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(albumDurationLBL1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,7 +156,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(playlistNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
                         .addComponent(albumDurationLBL1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,6 +191,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         loadMenu.add(loadACMI);
 
         loadPLMI.setText("Playlist");
+        loadPLMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadPLMIActionPerformed(evt);
+            }
+        });
         loadMenu.add(loadPLMI);
 
         fileMenu.add(loadMenu);
@@ -230,13 +239,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         Settings.setText("Settings");
 
-        AlbumCoverLocationMI.setText("Set Album Cover Location");
-        AlbumCoverLocationMI.addActionListener(new java.awt.event.ActionListener() {
+        albumCoverLocationMI.setText("Set Album Cover Location");
+        albumCoverLocationMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AlbumCoverLocationMIActionPerformed(evt);
+                albumCoverLocationMIActionPerformed(evt);
             }
         });
-        Settings.add(AlbumCoverLocationMI);
+        Settings.add(albumCoverLocationMI);
 
         menuBar.add(Settings);
 
@@ -262,57 +271,29 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addToAlbumNameCB() {
+    public void loadAC() {
+        String openLocation = System.getProperty("user.dir");
+        JFileChooser fc = new JFileChooser(openLocation);
+        fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fc.setMultiSelectionEnabled(false);
+        fc.setAcceptAllFileFilterUsed(false);
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            ac.read(file);
+            displayAlbumNames();
+        }
+    }
+    
+    private void displayAlbumNames() {
         albumNameCB.removeAllItems();
         List<Album> albums = ac.getAlbums();
         for (Album album : albums) {
             albumNameCB.addItem(album);
         }
     }
-
-    private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
-        String openLocation = System.getProperty("user.dir");
-        JFileChooser fc = new JFileChooser(openLocation);
-        fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
-        fc.setAcceptAllFileFilterUsed(false);
-        int returnVal = fc.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            ac.read(file);
-            addToAlbumNameCB();
-        }
-    }//GEN-LAST:event_loadACMIActionPerformed
-
-    private void SortByAlbumMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByAlbumMIActionPerformed
-        ac.sort();
-        addToAlbumNameCB();
-    }//GEN-LAST:event_SortByAlbumMIActionPerformed
-
-    private void SortByArtistMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByArtistMIActionPerformed
-        ac.sortByAlbum();
-        addToAlbumNameCB();
-    }//GEN-LAST:event_SortByArtistMIActionPerformed
-
-    private void AlbumCoverLocationMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlbumCoverLocationMIActionPerformed
-
-        String openLocation = System.getProperty("user.dir");
-        JFileChooser fc = new JFileChooser(openLocation);
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        fc.setAcceptAllFileFilterUsed(false);
-        int returnVal = fc.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            albumCoverDirectory = file.getAbsolutePath();
-            setAlbumDetails();
-        }
-    }//GEN-LAST:event_AlbumCoverLocationMIActionPerformed
-
-    private void albumNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_albumNameCBItemStateChanged
-
-        setAlbumDetails();
-    }//GEN-LAST:event_albumNameCBItemStateChanged
-
-    public void setAlbumDetails() {
+    
+    public void displayAlbumDetails() {
         if (albumNameCB.getItemCount() > 0) {
             int selectedAlbumIndex = albumNameCB.getSelectedIndex();
             Album selectedAlbum = albumNameCB.getItemAt(selectedAlbumIndex);
@@ -340,10 +321,97 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             ImageIcon albumCover = new ImageIcon(path);
             Image albumCoverImg = albumCover.getImage();
             Image albumCoverImgEdit = albumCoverImg.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+            albumCoverImgLBL.setHorizontalAlignment(JLabel.CENTER);
+            albumCoverImgLBL.setVerticalAlignment(JLabel.CENTER);
             albumCoverImgLBL.setIcon(new ImageIcon(albumCoverImgEdit));
             albumDurationLBL.setText("Duration: " + selectedAlbum.getDurationStr());
         }
     }
+    
+    
+    public void loadPL() {
+        String openLocation = System.getProperty("user.dir");
+        JFileChooser fc = new JFileChooser(openLocation);
+        fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fc.setMultiSelectionEnabled(false);
+        fc.setAcceptAllFileFilterUsed(false);
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            String path = file.getAbsolutePath();
+            String name = file.getName();
+            if (ac.toString().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "An album collection has not been loaded.\nPlease load an album collection before loading a playlist.");
+            } else if (playlists.containsKey(name)) {
+                JOptionPane.showMessageDialog(null, "A playlist with this name has already been loaded.");
+            } else {
+                playlists.put(name, path);
+                displayPlaylistNames();
+            }
+        }
+    }
+
+    public void displayPlaylistNames() {
+        if (!playlists.isEmpty()) {
+            for (HashMap.Entry<String, String> playlist : playlists.entrySet()) {
+                String playlistName = playlist.getKey();
+                playlistNameCB.addItem(playlistName);
+            }
+        }
+    }
+  
+    private void displayPlaylistDetails(){
+        
+    }
+    
+    private void renamePlaylist(){
+        
+    }
+    
+    private void createPlaylist(){
+        
+    }
+      
+    private void playStopTracks(){
+        
+    }
+    
+
+    private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
+        loadAC();
+    }//GEN-LAST:event_loadACMIActionPerformed
+
+    private void SortByAlbumMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByAlbumMIActionPerformed
+        ac.sort();
+        displayAlbumNames();
+    }//GEN-LAST:event_SortByAlbumMIActionPerformed
+
+    private void SortByArtistMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByArtistMIActionPerformed
+        ac.sortByAlbum();
+        displayAlbumNames();
+    }//GEN-LAST:event_SortByArtistMIActionPerformed
+
+    private void albumCoverLocationMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_albumCoverLocationMIActionPerformed
+
+        String openLocation = System.getProperty("user.dir");
+        JFileChooser fc = new JFileChooser(openLocation);
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setAcceptAllFileFilterUsed(false);
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            albumCoverDirectory = file.getAbsolutePath();
+            displayAlbumDetails();
+        }
+    }//GEN-LAST:event_albumCoverLocationMIActionPerformed
+
+    private void albumNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_albumNameCBItemStateChanged
+        displayAlbumDetails();
+    }//GEN-LAST:event_albumNameCBItemStateChanged
+
+    private void loadPLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPLMIActionPerformed
+        loadPL();
+    }//GEN-LAST:event_loadPLMIActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -380,12 +448,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ACSortMI;
-    private javax.swing.JMenuItem AlbumCoverLocationMI;
     private javax.swing.JMenu Settings;
     private javax.swing.JMenuItem SortByAlbumMI;
     private javax.swing.JMenuItem SortByArtistMI;
     private javax.swing.JButton addTrackBTN;
     private javax.swing.JLabel albumCoverImgLBL;
+    private javax.swing.JMenuItem albumCoverLocationMI;
     private javax.swing.JLabel albumDurationLBL;
     private javax.swing.JLabel albumDurationLBL1;
     private javax.swing.JComboBox<Album> albumNameCB;
@@ -395,7 +463,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JMenu editMenuPL;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton jButton10;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JList<String> jList6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -405,6 +472,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JMenu loadMenu;
     private javax.swing.JMenuItem loadPLMI;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JComboBox<String> playlistNameCB;
     private javax.swing.JMenuItem saveAsMenu;
     // End of variables declaration//GEN-END:variables
 
