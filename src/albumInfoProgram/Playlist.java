@@ -34,7 +34,9 @@ public class Playlist {
             // create new PlaylistTrack and add it to ArrayList tracks
             while ((line = reader.readLine()) != null) {
                 PlaylistTrack track = CreatePlaylistTrack(line);
-                tracks.add(track);
+                if(track.getDuration() != null){
+                    tracks.add(track);
+                }  
             }
             reader.close();
         } catch (Exception ex) {
