@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import static java.util.Comparator.comparing;
+import java.util.List;
 
 public class Playlist {
 
@@ -18,7 +19,7 @@ public class Playlist {
     }
 
     // constructor taking in an album collection and the playlist file name
-    public void read(File playlist) {
+    public boolean read(File playlist) {
 
         try {
             // import, connect and read whole file in
@@ -38,7 +39,9 @@ public class Playlist {
             reader.close();
         } catch (Exception ex) {
             System.out.println("Playlist import was unsuccessful");
+            return false;
         }
+        return true;
     }
 
     public PlaylistTrack CreatePlaylistTrack(String line) {
@@ -99,6 +102,11 @@ public class Playlist {
     public void remove(String track){
         PlaylistTrack PLTtrack = CreatePlaylistTrack(track);
         tracks.remove(PLTtrack);       
+    }
+    
+    // return unmodifiable list of albums
+    public List<PlaylistTrack> getTracks() {
+        return Collections.unmodifiableList(tracks);
     }
 
     // convert and return playlist as string
