@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import static java.util.Comparator.comparing;
 import java.util.List;
+import static java.util.Comparator.comparing;
 
 public class AlbumCollection {
 
@@ -15,13 +16,13 @@ public class AlbumCollection {
     }
 
     // read method
-    public void read(File fileName) {
+    public boolean read(File albumCollection) {
 
         try {
 
             // import, connect and read whole file in
             // Adapted from pg 454 Sierra and Bates, 2005
-            FileReader albumCollectionReader = new FileReader(fileName);
+            FileReader albumCollectionReader = new FileReader(albumCollection);
             BufferedReader reader = new BufferedReader(albumCollectionReader);
 
             String line = null;
@@ -35,7 +36,9 @@ public class AlbumCollection {
             // if it is an album create a new album
             // if it is a track add that track to the previously created album
             while ((line = reader.readLine()) != null) {
-                if (line.contains(" : ")) {
+                if (line.contains(" : ") && line.contains("(") && line.contains(")")) {
+                    return false;
+                } else if (line.contains(" : ")) {
                     album = new Album(line);
                     if (albums.contains(album)) {
                         albumExists = true;
@@ -43,7 +46,8 @@ public class AlbumCollection {
                         albums.add(album);
                         albumExists = false;
                     }
-                } else if (line.contains(" - ") && !albumExists) {
+                }
+                else if(line.contains(" - ") && !albumExists){
                     Track track = new Track(line);
                     album.addTrack(track);
                 }
@@ -51,7 +55,9 @@ public class AlbumCollection {
             reader.close();
         } catch (Exception ex) {
             System.out.println("Album collection import was unsuccessful");
+            return false;
         }
+        return true;
     }
 
     // sorts the AlbumCollection by artist then by title
@@ -65,7 +71,7 @@ public class AlbumCollection {
         Collections.sort(albums, comparing(Album::getTitle));
         return this;
     }
-    
+
     // return duration a particular artist
     public Duration getArtistDuration(String artist) {
 
