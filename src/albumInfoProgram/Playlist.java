@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import static java.util.Comparator.comparing;
 import java.util.List;
+import static java.util.Comparator.comparing;
 
 public class Playlist {
 
@@ -33,20 +34,19 @@ public class Playlist {
             // Use the track name and album to get track duration
             // create new PlaylistTrack and add it to ArrayList tracks
             while ((line = reader.readLine()) != null) {
-                PlaylistTrack track = CreatePlaylistTrack(line);
-                if(track.getDuration() != null){
+                PlaylistTrack track = createPlaylistTrack(line);
+                if(!tracks.contains(track) && track.getDuration() != null){
                     tracks.add(track);
-                }  
+                }
             }
             reader.close();
         } catch (Exception ex) {
-            System.out.println("Playlist import was unsuccessful");
             return false;
         }
         return true;
     }
 
-    public PlaylistTrack CreatePlaylistTrack(String line) {
+    public PlaylistTrack createPlaylistTrack(String line) {
         String[] lineInfo = line.replace(")", "").split(" \\(");
         Album album = new Album(lineInfo[1]);
         String trackName = lineInfo[0];
@@ -100,10 +100,8 @@ public class Playlist {
         tracks.remove(track);
     }
     
-    // remove playlisttrack from playlist (passing a string)
-    public void remove(String track){
-        PlaylistTrack PLTtrack = CreatePlaylistTrack(track);
-        tracks.remove(PLTtrack);       
+    public void clear(){
+        tracks.clear();
     }
     
     // return unmodifiable list of albums
