@@ -42,7 +42,15 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="saveAsMenu">
+            <MenuItem class="javax.swing.JMenuItem" name="savePLMI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save Playlist"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="savePLMIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="savePLAsMI">
               <Properties>
                 <Property name="mnemonic" type="int" value="111"/>
                 <Property name="text" type="java.lang.String" value="Save Playlist As"/>
@@ -187,9 +195,9 @@
                           <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="playlistDurationLBL" alignment="0" max="32767" attributes="0"/>
-                              <Component id="playlistNameCB" alignment="0" max="-2" attributes="0"/>
+                              <Component id="playlistNameCB" alignment="0" max="32767" attributes="0"/>
                               <Component id="jScrollPane7" max="32767" attributes="0"/>
-                              <Component id="jButton10" max="32767" attributes="0"/>
+                              <Component id="removeTrackBTN" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -209,7 +217,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane7" min="-2" pref="193" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jButton10" min="-2" max="-2" attributes="0"/>
+                          <Component id="removeTrackBTN" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="albumNameCB" min="-2" max="-2" attributes="0"/>
@@ -291,6 +299,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Add Track to Playlist"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addTrackBTNActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane5">
           <Properties>
@@ -343,10 +354,13 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton10">
+        <Component class="javax.swing.JButton" name="removeTrackBTN">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remove Track from Playlist"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeTrackBTNActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="playlistNameCB">
           <Properties>
