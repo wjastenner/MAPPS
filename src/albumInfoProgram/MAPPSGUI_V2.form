@@ -80,6 +80,16 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Playlist"/>
               </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="renamePLMI">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Rename"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="renamePLMIActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
             </Menu>
           </SubComponents>
         </Menu>
@@ -246,7 +256,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="albumNameCBItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="albumNameCBActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Album&gt;"/>

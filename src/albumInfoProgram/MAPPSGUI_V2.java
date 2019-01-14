@@ -56,6 +56,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         SortByAlbumMI = new javax.swing.JMenuItem();
         SortByArtistMI = new javax.swing.JMenuItem();
         editMenuPL = new javax.swing.JMenu();
+        renamePLMI = new javax.swing.JMenuItem();
         Settings = new javax.swing.JMenu();
         albumCoverLocationMI = new javax.swing.JMenuItem();
 
@@ -74,9 +75,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumNameCB.setMinimumSize(new java.awt.Dimension(361, 30));
         albumNameCB.setName(""); // NOI18N
         albumNameCB.setPreferredSize(new java.awt.Dimension(361, 30));
-        albumNameCB.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                albumNameCBItemStateChanged(evt);
+        albumNameCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                albumNameCBActionPerformed(evt);
             }
         });
 
@@ -233,6 +234,15 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         editMenu.add(editMenuAC);
 
         editMenuPL.setText("Playlist");
+
+        renamePLMI.setText("Rename");
+        renamePLMI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renamePLMIActionPerformed(evt);
+            }
+        });
+        editMenuPL.add(renamePLMI);
+
         editMenu.add(editMenuPL);
 
         menuBar.add(editMenu);
@@ -356,9 +366,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 Playlist playlist = new Playlist(ac);
                 boolean playlistValid = playlist.read(file);
                 if (playlistValid) {
-                    playlists.put(name, path);
-                    displayPlaylistNames();
-                    displayPlaylistDetails();
+                    addPlaylistName(name, path);
                 } else {
                     JOptionPane.showMessageDialog(null, "The playlist is not in the correct format.");
                 }
@@ -366,23 +374,19 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }
 
-    public void displayPlaylistNames() {       
-        if (!playlists.isEmpty()) {
-            playlistNameCB.removeAllItems();
-            for (HashMap.Entry<String, String> playlist : playlists.entrySet()) {
-                String playlistName = playlist.getKey();
-                String playlistNameEdit = playlistName.substring(0, (playlistName.length() - 4));
-                playlistNameCB.addItem(playlistNameEdit);
-            }
-        }
+    public void addPlaylistName(String playlistName, String playlistPath) {
+        playlists.put(playlistName, playlistPath);
+        playlistName = playlistName.substring(0, (playlistName.length() - 4));
+        playlistNameCB.addItem(playlistName);
+        playlistNameCB.setSelectedItem(playlistName);
     }
 
     private void displayPlaylistDetails() {
 
-        int CBPlaylistIndex = playlistNameCB.getSelectedIndex();
-        String CBPlaylist = playlistNameCB.getItemAt(CBPlaylistIndex) + ".txt";
+        String CBPlaylist = playlistNameCB.getSelectedItem() + ".txt";
 
         String playlistDirectory = playlists.get(CBPlaylist);
+
         File playlistFile = new File(playlistDirectory);
 
         Playlist playlist = new Playlist(ac);
@@ -402,6 +406,39 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     private void renamePlaylist() {
 
+        String newPL = JOptionPane.showInputDialog(null, "What would you like to rename the playlist?");
+
+        if (newPL != null && !newPL.isEmpty()) {
+
+            newPL = newPL.replaceAll("[^a-zA-Z0-9-]", "");
+            
+            String newPLEdit = newPL + ".txt";             
+            
+            String oldPL = playlistNameCB.getSelectedItem().toString();
+            
+            String oldPLEdit = oldPL + ".txt";           
+            
+            String oldPlaylistPath = playlists.get(oldPLEdit);
+            
+            String newPath = oldPlaylistPath.substring(0, oldPlaylistPath.length()-oldPLEdit.length()) + newPLEdit;
+            
+            File oldFile = new File(oldPlaylistPath);
+                       
+            File newFile = new File(newPath);
+            
+            oldFile.renameTo(newFile);
+            
+            playlists.put(newPLEdit, newPath);
+            
+            playlists.remove(oldPLEdit);
+            
+            playlistNameCB.addItem(newPL);
+            
+            playlistNameCB.removeItem(oldPL);
+            
+            playlistNameCB.setSelectedItem(newPL);
+            
+        }
     }
 
     private void createPlaylist() {
@@ -411,7 +448,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private void playStopTracks() {
 
     }
-
 
     private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
         loadAC();
@@ -441,10 +477,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_albumCoverLocationMIActionPerformed
 
-    private void albumNameCBItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_albumNameCBItemStateChanged
-        displayAlbumDetails();
-    }//GEN-LAST:event_albumNameCBItemStateChanged
-
     private void loadPLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadPLMIActionPerformed
         loadPL();
     }//GEN-LAST:event_loadPLMIActionPerformed
@@ -452,6 +484,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private void playlistNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playlistNameCBActionPerformed
         displayPlaylistDetails();
     }//GEN-LAST:event_playlistNameCBActionPerformed
+
+    private void albumNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_albumNameCBActionPerformed
+        displayAlbumDetails();
+    }//GEN-LAST:event_albumNameCBActionPerformed
+
+    private void renamePLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePLMIActionPerformed
+        renamePlaylist();
+    }//GEN-LAST:event_renamePLMIActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -513,6 +553,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JLabel playlistDurationLBL;
     private javax.swing.JComboBox<String> playlistNameCB;
     private javax.swing.JList<PlaylistTrack> playlistTracksList;
+    private javax.swing.JMenuItem renamePLMI;
     private javax.swing.JMenuItem saveAsMenu;
     // End of variables declaration//GEN-END:variables
 
