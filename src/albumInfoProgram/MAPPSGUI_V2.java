@@ -18,13 +18,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     AlbumCollection ac;
-    HashMap<String, String> playlists = new HashMap<>();
+    HashMap<String, String> playlists;
     String albumCoverDirectory;
 
     public MAPPSGUI_V2() {
         initComponents();
         ac = new AlbumCollection();
-        albumCoverDirectory = System.getProperty("user.dir");
+        playlists = new HashMap<>();
+        albumCoverDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "images";
     }
 
     @SuppressWarnings("unchecked")
@@ -57,12 +58,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         SortByArtistMI = new javax.swing.JMenuItem();
         editMenuPL = new javax.swing.JMenu();
         renamePLMI = new javax.swing.JMenuItem();
-        Settings = new javax.swing.JMenu();
+        settings = new javax.swing.JMenu();
         albumCoverLocationMI = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MAPPS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Arial", 1, 18))); // NOI18N
 
         albumDurationLBL.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -71,6 +73,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         albumNameCB.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        albumNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        albumNameCB.setEnabled(false);
         albumNameCB.setMaximumSize(new java.awt.Dimension(361, 30));
         albumNameCB.setMinimumSize(new java.awt.Dimension(361, 30));
         albumNameCB.setName(""); // NOI18N
@@ -91,9 +95,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         albumTracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         albumTracksList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        albumTracksList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                albumTracksListMousePressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(albumTracksList);
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(102, 0, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -109,6 +118,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jButton10.setText("Remove Track from Playlist");
 
         playlistNameCB.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        playlistNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        playlistNameCB.setEnabled(false);
         playlistNameCB.setPreferredSize(new java.awt.Dimension(361, 26));
         playlistNameCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +131,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         playlistTracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         playlistTracksList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        playlistTracksList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                playlistTracksListMousePressed(evt);
+            }
+        });
         jScrollPane7.setViewportView(playlistTracksList);
 
         playlistDurationLBL.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -149,7 +165,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                             .addComponent(playlistNameCB, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(14, 14, 14))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,6 +194,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 .addGap(14, 14, 14))
         );
 
+        menuBar.setBackground(new java.awt.Color(0, 0, 0));
+        menuBar.setForeground(new java.awt.Color(0, 0, 0));
+
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
@@ -192,6 +211,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         loadMenu.add(loadACMI);
 
         loadPLMI.setText("Playlist");
+        loadPLMI.setEnabled(false);
         loadPLMI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loadPLMIActionPerformed(evt);
@@ -247,7 +267,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         menuBar.add(editMenu);
 
-        Settings.setText("Settings");
+        settings.setText("Settings");
 
         albumCoverLocationMI.setText("Set Album Cover Location");
         albumCoverLocationMI.addActionListener(new java.awt.event.ActionListener() {
@@ -255,9 +275,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 albumCoverLocationMIActionPerformed(evt);
             }
         });
-        Settings.add(albumCoverLocationMI);
+        settings.add(albumCoverLocationMI);
 
-        menuBar.add(Settings);
+        menuBar.add(settings);
 
         setJMenuBar(menuBar);
 
@@ -265,17 +285,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -293,6 +307,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             boolean acValid = ac.read(file);
             if (acValid) {
                 displayAlbumNames();
+                loadPLMI.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(null, "The album collection is not in the correct format.");
             }
@@ -303,6 +318,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }
 
     private void displayAlbumNames() {
+        albumNameCB.setEnabled(true);
         albumNameCB.removeAllItems();
         List<Album> albums = ac.getAlbums();
         for (Album album : albums) {
@@ -325,14 +341,25 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             String selectedAlbumTitleUpperCaseStripped = selectedAlbumTitleUpperCase.replaceAll("[^A-Za-z]+", "");
             File[] albumCovers = new File(albumCoverDirectory).listFiles();
             String path = null;
+
             for (File file : albumCovers) {
                 String fileName = file.getName();
-                if (fileName.contains("jpg")) {
+                if (fileName.endsWith("jpg")) {
                     String[] parts = fileName.split("[_.]+");
                     fileName = parts[1].toUpperCase();
+
+                    String theFinder = fileName.substring(0, 2).toUpperCase();
+
+                    if (theFinder.equals("THE")) {
+                        fileName = fileName.substring(3, fileName.length());
+                    }
+
                     if (fileName.equals(selectedAlbumTitleUpperCaseStripped)) {
                         path = file.getAbsolutePath();
                     }
+
+                    System.out.println(fileName);
+                    System.out.println(selectedAlbumTitleUpperCaseStripped);
                 }
             }
             ImageIcon albumCover = new ImageIcon(path);
@@ -345,6 +372,77 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             String albumDuration = selectedAlbum.getDuration().toString();
             albumDurationLBL.setText("Duration: " + albumDuration);
         }
+    }
+
+    public void displayAlbumDetails2() {
+
+        Album selectedAlbum = (Album) albumNameCB.getSelectedItem();
+
+        String selectedAlbumTitle = selectedAlbum.getTitle().toUpperCase();
+
+        if (selectedAlbumTitle.startsWith("THE")) {
+            selectedAlbumTitle = selectedAlbumTitle.substring(3, selectedAlbumTitle.length());
+        }
+        
+        selectedAlbumTitle = selectedAlbumTitle.replaceAll("[^A-Za-z]+", "");
+
+        File[] albumCovers = new File(albumCoverDirectory).listFiles();
+
+        HashMap<String, String> albumCoverMatches = new HashMap<>();
+        ArrayList<String> albumCoverMatchesAL = new ArrayList<>();
+
+        for (File albumCover : albumCovers) {
+            String albumCoverName = albumCover.getName().toUpperCase();
+            if (albumCoverName.endsWith(".JPG")) {
+                String[] albumCoverNameParts = albumCoverName.split("[_.]");
+                if (albumCoverNameParts[1].equals(selectedAlbumTitle)) {
+                    albumCoverMatches.put(albumCover.getName(), albumCover.getAbsolutePath());
+                    albumCoverMatchesAL.add(albumCover.getName());
+                }
+            }
+        }
+
+        String selectedAlbumArtist = selectedAlbum.getArtist();
+        String selectedAlbumArtistEdit = "";
+        if (selectedAlbumArtist.startsWith("The")) {
+            selectedAlbumArtist = selectedAlbumArtist.substring(4, selectedAlbumArtist.length());
+        }
+        String[] words = selectedAlbumArtist.split(" ");
+        if (words.length == 1) {
+            selectedAlbumArtistEdit = words[0];
+        } else {
+            selectedAlbumArtist = "";
+            for (String word : words) {
+                if (!word.contains("and")) {
+                    selectedAlbumArtist += word;
+                }
+            }
+            for (char ch : selectedAlbumArtist.toCharArray()) {
+                if (Character.isUpperCase(ch)) {
+                    selectedAlbumArtistEdit += ch;
+                }
+            }
+        }
+
+        String albumCoverImgPath = "";
+
+        int matches = albumCoverMatches.size();
+
+        if (matches == 1) {
+            albumCoverImgPath = albumCoverMatches.get(albumCoverMatchesAL.get(0));
+        } else if (matches > 1) {
+            for (File albumCover : albumCovers) {
+                String[] albumCoverNameParts = albumCover.getName().toUpperCase().split("_");
+                if(albumCoverNameParts[0].equals(selectedAlbumArtistEdit)){
+                    albumCoverImgPath = albumCover.getAbsolutePath();                   
+                }
+            }
+        } else if (matches == 0) {
+            System.out.println("No album cover found");
+        }
+        
+        System.out.println(albumCoverImgPath);
+
     }
 
     public void loadPL() {
@@ -366,6 +464,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 Playlist playlist = new Playlist(ac);
                 boolean playlistValid = playlist.read(file);
                 if (playlistValid) {
+                    playlistNameCB.setEnabled(true);
                     addPlaylistName(name, path);
                 } else {
                     JOptionPane.showMessageDialog(null, "The playlist is not in the correct format.");
@@ -411,33 +510,33 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         if (newPL != null && !newPL.isEmpty()) {
 
             newPL = newPL.replaceAll("[^a-zA-Z0-9-]", "");
-            
-            String newPLEdit = newPL + ".txt";             
-            
+
+            String newPLEdit = newPL + ".txt";
+
             String oldPL = playlistNameCB.getSelectedItem().toString();
-            
-            String oldPLEdit = oldPL + ".txt";           
-            
+
+            String oldPLEdit = oldPL + ".txt";
+
             String oldPlaylistPath = playlists.get(oldPLEdit);
-            
-            String newPath = oldPlaylistPath.substring(0, oldPlaylistPath.length()-oldPLEdit.length()) + newPLEdit;
-            
+
+            String newPath = oldPlaylistPath.substring(0, oldPlaylistPath.length() - oldPLEdit.length()) + newPLEdit;
+
             File oldFile = new File(oldPlaylistPath);
-                       
+
             File newFile = new File(newPath);
-            
+
             oldFile.renameTo(newFile);
-            
+
             playlists.put(newPLEdit, newPath);
-            
+
             playlists.remove(oldPLEdit);
-            
+
             playlistNameCB.addItem(newPL);
-            
+
             playlistNameCB.removeItem(oldPL);
-            
+
             playlistNameCB.setSelectedItem(newPL);
-            
+
         }
     }
 
@@ -493,6 +592,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         renamePlaylist();
     }//GEN-LAST:event_renamePLMIActionPerformed
 
+    private void albumTracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_albumTracksListMousePressed
+        playlistTracksList.clearSelection();
+    }//GEN-LAST:event_albumTracksListMousePressed
+
+    private void playlistTracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistTracksListMousePressed
+        albumTracksList.clearSelection();
+    }//GEN-LAST:event_playlistTracksListMousePressed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -528,7 +635,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ACSortMI;
-    private javax.swing.JMenu Settings;
     private javax.swing.JMenuItem SortByAlbumMI;
     private javax.swing.JMenuItem SortByArtistMI;
     private javax.swing.JButton addTrackBTN;
@@ -536,7 +642,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JMenuItem albumCoverLocationMI;
     private javax.swing.JLabel albumDurationLBL;
     private javax.swing.JComboBox<Album> albumNameCB;
-    private javax.swing.JList<Album> albumTracksList;
+    private javax.swing.JList<Track> albumTracksList;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu editMenuAC;
     private javax.swing.JMenu editMenuPL;
@@ -555,6 +661,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JList<PlaylistTrack> playlistTracksList;
     private javax.swing.JMenuItem renamePLMI;
     private javax.swing.JMenuItem saveAsMenu;
+    private javax.swing.JMenu settings;
     // End of variables declaration//GEN-END:variables
 
 }
