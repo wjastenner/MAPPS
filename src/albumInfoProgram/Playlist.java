@@ -35,7 +35,7 @@ public class Playlist {
             // create new PlaylistTrack and add it to ArrayList tracks
             while ((line = reader.readLine()) != null) {
                 PlaylistTrack track = createPlaylistTrack(line);
-                if(!tracks.contains(track) && track.getDuration() != null){
+                if(track.getDuration() != null){
                     tracks.add(track);
                 }
             }
@@ -90,14 +90,20 @@ public class Playlist {
         return this;
     }
     
-    // add playlisttrack to playlist
+    public boolean trackExists(PlaylistTrack track){        
+        return tracks.contains(track);
+    }
+
+// add playlisttrack to playlist
     public void add(PlaylistTrack track) {
         tracks.add(track);
     }
 
     // remove playlisttrack from playlist (passing a playlisttrack)
-    public void remove(PlaylistTrack track) {
-        tracks.remove(track);
+    public void remove(int[] trackNumbers) {      
+        for(int i = trackNumbers.length-1; i >= 0 ; i--){
+            tracks.remove(trackNumbers[i]); 
+        }
     }
     
     public void clear(){
