@@ -1,6 +1,5 @@
 package albumInfoProgram;
 
-import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
