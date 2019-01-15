@@ -103,7 +103,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jScrollPane5.setPreferredSize(new java.awt.Dimension(200, 132));
 
         albumTracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        albumTracksList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         albumTracksList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 albumTracksListMousePressed(evt);
@@ -144,7 +143,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jScrollPane7.setPreferredSize(new java.awt.Dimension(200, 132));
 
         playlistTracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        playlistTracksList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         playlistTracksList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 playlistTracksListMousePressed(evt);
@@ -209,7 +207,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         );
 
         menuBar.setBackground(new java.awt.Color(0, 0, 0));
-        menuBar.setForeground(new java.awt.Color(0, 0, 0));
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -507,9 +504,10 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }
 
-    private void removeTrackPL() {
-        PlaylistTrack track = playlistTracksList.getSelectedValue();
-        playlist.remove(track);
+    private void removeTracksPL() {
+        int[] trackNumber = playlistTracksList.getSelectedIndices();
+        playlist.remove(trackNumber);
+        savePlaylist();
         displayPlaylistDetails();
     }
 
@@ -526,12 +524,62 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         } catch (IOException ex) {
         }
     }
-    
-    private void addTrackPL(){
-        Track track = albumTracksList.getSelectedValue();
+
+    private void addTracksPL() {
+
         Album album = (Album) albumNameCB.getSelectedItem();
-        PlaylistTrack addedTrack = new PlaylistTrack(album, track.getDuration(), track.getName());
-        playlist.add(addedTrack);
+
+        List<Track> selectedTracks = albumTracksList.getSelectedValuesList();
+
+        ArrayList<PlaylistTrack> playlistTracks = new ArrayList<>();
+
+        for (Track track : selectedTracks) {
+            playlistTracks.add(new PlaylistTrack(album, track.getDuration(), track.getName()));
+        }
+
+        int duplicates = 0;
+
+        for (PlaylistTrack playlistTrack : playlistTracks) {
+            if (playlist.trackExists(playlistTrack)) {
+                duplicates++;
+            }
+        }
+
+        if (duplicates == 1) {
+            for (PlaylistTrack playlistTrack : playlistTracks) {
+                if (playlist.trackExists(playlistTrack)) {
+                    int input = JOptionPane.showConfirmDialog(null, playlistTrack.getName() + " already exists in the playlist. \n Would you like to add it anyway?", "Duplicate track found", JOptionPane.YES_NO_OPTION);
+                    if (input == 0) {
+                        playlist.add(playlistTrack);
+                        savePlaylist();
+                    }
+                } else {
+                    playlist.add(playlistTrack);
+                    savePlaylist();
+                }
+            }
+        } else if (duplicates > 1) {
+            int input = JOptionPane.showConfirmDialog(null, " Several of the tracks already exist in the playlist \n Would you like to add them anyway?", "Duplicate tracks found", JOptionPane.YES_NO_OPTION);
+            if (input == 0) {
+                for (PlaylistTrack playlistTrack : playlistTracks) {
+                    playlist.add(playlistTrack);
+                    savePlaylist();
+                }
+            } else {
+                for (PlaylistTrack playlistTrack : playlistTracks) {
+                    if (!playlist.trackExists(playlistTrack)) {
+                        playlist.add(playlistTrack);
+                        savePlaylist();
+                    }
+                }
+            }
+        } else {
+            for (PlaylistTrack playlistTrack : playlistTracks) {
+                playlist.add(playlistTrack);
+                savePlaylist();
+            }
+        }
+
         displayPlaylistDetails();
     }
 
@@ -601,7 +649,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }//GEN-LAST:event_playlistTracksListMousePressed
 
     private void removeTrackBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTrackBTNActionPerformed
-        removeTrackPL();
+        removeTracksPL();
     }//GEN-LAST:event_removeTrackBTNActionPerformed
 
     private void savePLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePLMIActionPerformed
@@ -609,7 +657,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }//GEN-LAST:event_savePLMIActionPerformed
 
     private void addTrackBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTrackBTNActionPerformed
-        addTrackPL();
+        addTracksPL();
     }//GEN-LAST:event_addTrackBTNActionPerformed
 
     public static void main(String args[]) {
