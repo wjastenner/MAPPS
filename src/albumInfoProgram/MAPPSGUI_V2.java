@@ -94,6 +94,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumCoverImgLBL.setPreferredSize(new java.awt.Dimension(300, 300));
 
         addTrackBTN.setText("Add Track to Playlist");
+        addTrackBTN.setEnabled(false);
         addTrackBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addTrackBTNActionPerformed(evt);
@@ -452,9 +453,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             } else if (playlists.containsKey(name)) {
                 JOptionPane.showMessageDialog(null, "A playlist with this name has already been loaded.");
             } else {
-                boolean playlistValid = playlist.read(file);
-                if (playlistValid) {
+                System.out.println(file);
+                int playlistValid = playlist.read(file);
+                if(playlistValid == 1){
+                    JOptionPane.showMessageDialog(null, "The playlist contains tracks that can not be found in the album collection.\nThese tracks can not be displayed and will be lost if changes to the playlist are made.");
+                }                              
+                if (playlistValid == 0 || playlistValid == 1) {
                     playlistNameCB.setEnabled(true);
+                    addTrackBTN.setEnabled(true);
                     addPlaylistName(name, path);
                 } else {
                     JOptionPane.showMessageDialog(null, "The playlist is not in the correct format.");
@@ -559,7 +565,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 }
             }
         } else if (duplicates > 1) {
-            int input = JOptionPane.showConfirmDialog(null, " Several of the tracks already exist in the playlist \n Would you like to add them anyway?", "Duplicate tracks found", JOptionPane.YES_NO_OPTION);
+            int input = JOptionPane.showConfirmDialog(null, " Several of the tracks already exist in the playlist \n Would you like to add them anyway? \n \\(Non-duplicates will still be added)", "Duplicate tracks found", JOptionPane.YES_NO_OPTION);
             if (input == 0) {
                 for (PlaylistTrack playlistTrack : playlistTracks) {
                     playlist.add(playlistTrack);
@@ -581,6 +587,17 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
 
         displayPlaylistDetails();
+    }
+    
+    private void clearPL(){
+        
+    }
+    
+    private void removePL(){
+        
+    }
+    
+    private void deletePL(){      
     }
 
     private void createPlaylist() {
