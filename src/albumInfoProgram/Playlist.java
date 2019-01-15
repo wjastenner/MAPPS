@@ -20,8 +20,10 @@ public class Playlist {
     }
 
     // constructor taking in an album collection and the playlist file name
-    public boolean read(File playlist) {
+    public int read(File playlist) {
 
+        int issues = 0;
+        
         try {
             // import, connect and read whole file in
             // Adapted from pg 454 Sierra and Bates, 2005
@@ -35,21 +37,34 @@ public class Playlist {
             // create new PlaylistTrack and add it to ArrayList tracks
             while ((line = reader.readLine()) != null) {
                 PlaylistTrack track = createPlaylistTrack(line);
-                if(track.getDuration() != null){
+                if (track.getDuration() != null) {
                     tracks.add(track);
+                    issues = 1;
                 }
-            }
-            reader.close();
+            }           
+            reader.close();            
         } catch (Exception ex) {
-            return false;
+            issues = 2;
         }
-        return true;
+        return issues;
     }
 
     public PlaylistTrack createPlaylistTrack(String line) {
-        String[] lineInfo = line.replace(")", "").split(" \\(");
-        Album album = new Album(lineInfo[1]);
-        String trackName = lineInfo[0];
+
+        String[] parts = line.split("\\)");
+        Album album = null;
+        String trackName = null;
+
+        if (parts.length == 1) {
+            String[] lineInfo = line.replace(")", "").split(" \\(");
+            album = new Album(lineInfo[1]);
+            trackName = lineInfo[0];
+        } else if (parts.length > 1) {
+            String albumName = parts[1].substring(2, parts[1].length());
+            album = new Album(albumName);
+            trackName = parts[0] + ")";
+        }
+
         Duration trackDuration = this.albumCollection.getTrackDuration(album, trackName);
         PlaylistTrack track = new PlaylistTrack(album, trackDuration, trackName);
         return track;
@@ -89,8 +104,8 @@ public class Playlist {
         Collections.sort(tracks, comparing(PlaylistTrack::toSeconds));
         return this;
     }
-    
-    public boolean trackExists(PlaylistTrack track){        
+
+    public boolean trackExists(PlaylistTrack track) {
         return tracks.contains(track);
     }
 
@@ -100,16 +115,16 @@ public class Playlist {
     }
 
     // remove playlisttrack from playlist (passing a playlisttrack)
-    public void remove(int[] trackNumbers) {      
-        for(int i = trackNumbers.length-1; i >= 0 ; i--){
-            tracks.remove(trackNumbers[i]); 
+    public void remove(int[] trackNumbers) {
+        for (int i = trackNumbers.length - 1; i >= 0; i--) {
+            tracks.remove(trackNumbers[i]);
         }
     }
-    
-    public void clear(){
+
+    public void clear() {
         tracks.clear();
     }
-    
+
     // return unmodifiable list of albums
     public List<PlaylistTrack> getTracks() {
         return Collections.unmodifiableList(tracks);
@@ -120,7 +135,7 @@ public class Playlist {
     public String toString() {
         String playlist = "";
         for (PlaylistTrack track : tracks) {
-            playlist += track + "\n";
+            playlist += track.getName() + " (" + track.getAlbumDetails() + ")\n";
         }
         return playlist;
     }
