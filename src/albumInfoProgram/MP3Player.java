@@ -33,7 +33,6 @@ public class MP3Player {
             FileInputStream fis = new FileInputStream(filename);
             BufferedInputStream bis = new BufferedInputStream(fis);
             player = new Player(bis);
-            player.play();
         } catch (Exception e) {
             System.out.println("\n Problem in playing: " + filename);
             System.out.println(e);

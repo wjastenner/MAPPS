@@ -1,7 +1,10 @@
 package albumInfoProgram;
 
 import java.awt.Image;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,12 +12,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 @SuppressWarnings("unchecked")
 
@@ -843,21 +852,18 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         }
     }
-    
-    private void playStopMP3(String instruction){
-        String mp3Directory = getMP3Directory();
-        MP3Player trackMP3 = new MP3Player(mp3Directory);
-        if(instruction.equals("play")){
-            trackMP3.play();
-        }
-        else{
-            trackMP3.close();
-        }
+
+    private void playStopMP3(String instruction) {
+        Application.launch();
+        String bip = getMP3Directory();
+        Media hit = new Media(new File(bip).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.play();
     }
 
     private String getMP3Directory() {
         List<Track> tracksSelected = albumTracksList.getSelectedValuesList();
-        List<PlaylistTrack> PLTSelected = playlistTracksList.getSelectedValuesList();       
+        List<PlaylistTrack> PLTSelected = playlistTracksList.getSelectedValuesList();
         String albumFolderDirectory = "";
         String trackNumber;
         Album selectedAlbum;
@@ -866,61 +872,60 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             selectedAlbum = (Album) albumNameCB.getSelectedItem();
             Track selectedTrack = albumTracksList.getSelectedValue();
             trackNumber = ac.getTrackNumber(selectedAlbum, selectedTrack.getName());
-            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);  
+            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);
             mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedTrack.getName());
         } else if (PLTSelected.size() == 1) {
             PlaylistTrack selectedPLT = playlistTracksList.getSelectedValue();
             selectedAlbum = selectedPLT.getAlbum();
             trackNumber = ac.getTrackNumber(selectedAlbum, selectedPLT.getName());
-            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);          
+            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);
             mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedPLT.getName());
-        }       
+        }
         return mp3Directory;
     }
 
     private String getAlbumFolderDirectory(Album album) {
         File[] albumFolders = new File(mp3AlbumDirectory).listFiles();
         String albumFolderDirectory = "";
-        String selectedAlbumTitle = album.getTitle();       
-        selectedAlbumTitle = selectedAlbumTitle.replaceAll(" ", "").toUpperCase().trim();              
-        int matches = 0;      
-        List<File> matchedFiles = new ArrayList<>();        
+        String selectedAlbumTitle = album.getTitle();
+        selectedAlbumTitle = selectedAlbumTitle.replaceAll(" ", "").toUpperCase().trim();
+        int matches = 0;
+        List<File> matchedFiles = new ArrayList<>();
         for (File albumFolder : albumFolders) {
             String albumFolderName = albumFolder.getName().toUpperCase();
             if (albumFolderName.endsWith(selectedAlbumTitle)) {
                 matches++;
                 matchedFiles.add(albumFolder);
             }
-        }       
-        if(matchedFiles.size()==1){
-            albumFolderDirectory = matchedFiles.get(0).getAbsolutePath();
         }
-        else if(matchedFiles.size() > 1){
+        if (matchedFiles.size() == 1) {
+            albumFolderDirectory = matchedFiles.get(0).getAbsolutePath();
+        } else if (matchedFiles.size() > 1) {
             String selectedAlbumArtist = album.getArtist().replaceAll("&", "");
             selectedAlbumArtist = selectedAlbumArtist.replace("The ", "").replace(" ", "_");
-            for(File matchedFile : matchedFiles){
-                if(matchedFile.getName().startsWith(selectedAlbumArtist)){
+            for (File matchedFile : matchedFiles) {
+                if (matchedFile.getName().startsWith(selectedAlbumArtist)) {
                     albumFolderDirectory = matchedFile.getAbsolutePath();
                 }
             }
-        }        
+        }
         return albumFolderDirectory;
     }
-    
-    private String getTrackDirectory(String directory, String artist, String trackNumber, String trackTitle){
+
+    private String getTrackDirectory(String directory, String artist, String trackNumber, String trackTitle) {
         artist = artist.replaceAll("'", "").replaceAll("[& ]", "_");
         trackNumber = "_-_" + trackNumber + "_-_";
         trackTitle = trackTitle.replaceAll(" ", "_") + ".mp3";
-        String selectedTrackEdit = artist + trackNumber + trackTitle;        
+        String selectedTrackEdit = artist + trackNumber + trackTitle;
         File[] mp3Files = new File(directory).listFiles();
-        for(File mp3File : mp3Files){
-            if(mp3File.getName().equals(selectedTrackEdit)){
+        for (File mp3File : mp3Files) {
+            if (mp3File.getName().equals(selectedTrackEdit)) {
                 return mp3File.getAbsolutePath();
             }
         }
         return "no match found";
     }
-    
+
     private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
         loadAC();
     }//GEN-LAST:event_loadACMIActionPerformed
@@ -962,7 +967,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }//GEN-LAST:event_renamePLMIActionPerformed
 
     private void albumTracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_albumTracksListMousePressed
-        playlistTracksList.clearSelection();        
+        playlistTracksList.clearSelection();
     }//GEN-LAST:event_albumTracksListMousePressed
 
     private void savePLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePLMIActionPerformed
@@ -1044,16 +1049,24 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAPPSGUI_V2.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
