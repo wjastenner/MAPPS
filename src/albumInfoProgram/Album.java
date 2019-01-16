@@ -1,5 +1,6 @@
 package albumInfoProgram;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -92,6 +93,11 @@ public class Album {
     
     public List<Track> getTracks(){
         return Collections.unmodifiableList(tracks);
+    }
+    
+    public String getSize(){
+        DecimalFormat formatter = new DecimalFormat("00");        
+        return formatter.format(tracks.size());
     }
     
     // override the equals method. Compares the getDetails method of two albums

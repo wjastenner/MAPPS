@@ -3,6 +3,7 @@ package albumInfoProgram;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import static java.util.Comparator.comparing;
@@ -23,7 +24,7 @@ public class Playlist {
     public int read(File playlist) {
 
         int issues = 0;
-        
+
         try {
             // import, connect and read whole file in
             // Adapted from pg 454 Sierra and Bates, 2005
@@ -39,10 +40,11 @@ public class Playlist {
                 PlaylistTrack track = createPlaylistTrack(line);
                 if (track.getDuration() != null) {
                     tracks.add(track);
+                } else {
                     issues = 1;
                 }
-            }           
-            reader.close();            
+            }
+            reader.close();
         } catch (Exception ex) {
             issues = 2;
         }
@@ -79,6 +81,12 @@ public class Playlist {
             duration.add(track.getDuration());
         }
         return duration;
+    }
+    
+    // return number of tracks in playlists
+    public String getSize(){
+        DecimalFormat formatter = new DecimalFormat("00");        
+        return formatter.format(tracks.size());
     }
 
     // sorts playlist by track name
