@@ -33,6 +33,7 @@ public class MP3Player {
             FileInputStream fis = new FileInputStream(filename);
             BufferedInputStream bis = new BufferedInputStream(fis);
             player = new Player(bis);
+            player.play();
         } catch (Exception e) {
             System.out.println("\n Problem in playing: " + filename);
             System.out.println(e);
@@ -60,38 +61,4 @@ public class MP3Player {
             }
         }.start();
     }
-
-    // test MP3Player
-    public static void main(String[] args) {
-        //String filename = args[0];
-        String filename = "SleepAway.mp3";
-        // String filepath ="C:\\awork\\teaching\\ma23\\lab6"; 
-        String fileType;
-
-        // use JFileChooser to open an MP3 file
-        try {
-            //use a preset file path 
-            //JFileChooser openFC = new JFileChooser(filepath);
-
-            JFileChooser openFC = new JFileChooser();
-            Component c1 = null;
-            openFC.showOpenDialog(c1);
-            File mp3file = openFC.getSelectedFile();
-            filename = mp3file.getAbsolutePath();
-
-            //check the file format 
-            //fileType= openFC.getTypeDescription(mp3file);
-            //System.out.print("file type= "+ fileType);
-        } catch (Exception e) {
-        }
-
-        //MP3Player0 mp3 = new MP3Player0(filename); 
-        // creat an instance of MP3Player0 using default constructor
-        MP3Player mp3 = new MP3Player();
-        mp3.play(filename);
-        System.out.println("\n Playing mp3 file:" + filename);
-        // the programn will stop when the track ends. 
-        //mp3.close();
-    }
-
 }
