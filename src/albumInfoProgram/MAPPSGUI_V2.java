@@ -520,21 +520,18 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                         albumCoverImgPath = albumCover.getAbsolutePath();
                     }
                 }
-            } else if (matches == 0) {
-                System.out.println("No album cover found");
-                albumCoverImgPath = System.getProperty("user.dir") + File.separator + "unknown_album.jpg";
             }
 
-            System.out.println(selectedAlbumTitle);
-
-            System.out.println(albumCoverImgPath);
-
-            ImageIcon albumCover = new ImageIcon(albumCoverImgPath);
-            Image albumCoverImg = albumCover.getImage();
-            Image albumCoverImgEdit = albumCoverImg.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-            albumCoverImgLBL.setHorizontalAlignment(JLabel.CENTER);
-            albumCoverImgLBL.setVerticalAlignment(JLabel.CENTER);
-            albumCoverImgLBL.setIcon(new ImageIcon(albumCoverImgEdit));
+            if (!albumCoverImgPath.equals("")) {
+                ImageIcon albumCover = new ImageIcon(albumCoverImgPath);
+                Image albumCoverImg = albumCover.getImage();
+                Image albumCoverImgEdit = albumCoverImg.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+                albumCoverImgLBL.setHorizontalAlignment(JLabel.CENTER);
+                albumCoverImgLBL.setVerticalAlignment(JLabel.CENTER);
+                albumCoverImgLBL.setIcon(new ImageIcon(albumCoverImgEdit));
+            } else {
+                albumCoverImgLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource(File.separator + "albumInfoProgram" + File.separator + "unknown_album.jpg")));
+            }
         }
     }
 
@@ -606,7 +603,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             tracksListGUI.addElement(track);
         }
         String playlistDuration = playlist.getDuration().toString();
-        
+
         playlistDurationLBL.setText("TRACKS: " + playlist.getSize() + " | DURATION: " + playlistDuration);
 
         if (tracksListGUI.size() < 1) {
