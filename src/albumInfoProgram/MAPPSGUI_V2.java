@@ -23,6 +23,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     AlbumCollection ac;
     HashMap<String, String> playlists;
     String albumCoverDirectory;
+    String mp3AlbumDirectory;
     Playlist playlist;
 
     public MAPPSGUI_V2() {
@@ -30,6 +31,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         ac = new AlbumCollection();
         playlists = new HashMap<>();
         albumCoverDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "images";
+        mp3AlbumDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "albums";
         playlist = new Playlist(ac);
     }
 
@@ -75,6 +77,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumCoverLocationMI = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MAPPS");
         setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(204, 204, 204));
@@ -110,7 +113,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         albumCoverImgLBL.setBackground(new java.awt.Color(0, 0, 0));
         albumCoverImgLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/unknown_album.jpg"))); // NOI18N
-        albumCoverImgLBL.setPreferredSize(new java.awt.Dimension(300, 300));
 
         addTrackBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         addTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
@@ -165,7 +167,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                         .addComponent(albumDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
+                        .addGap(10, 10, 10)
                         .addComponent(addTrackBTN)))
                 .addGap(14, 14, 14))
         );
@@ -235,18 +237,16 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             .addGroup(PLPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PLPanelLayout.createSequentialGroup()
-                        .addGroup(PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PLTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(playlistDurationLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(playlistNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14))
+                    .addGroup(PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(PLTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(playlistDurationLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(playlistNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PLPanelLayout.createSequentialGroup()
                         .addComponent(removeTrackBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(savePLBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))))
+                        .addComponent(savePLBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
         );
         PLPanelLayout.setVerticalGroup(
             PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +259,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 .addComponent(playlistDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(10, 10, 10)
                 .addGroup(PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeTrackBTN)
                     .addComponent(savePLBTN))
@@ -761,50 +761,108 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     private void createPlaylist() {
 
-        boolean fileCreated = false;
-
-        do {
-            int result = 0;
-            String openLocation = System.getProperty("user.dir");
-            JFileChooser fc = new JFileChooser(openLocation);
-            fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
-            fc.setMultiSelectionEnabled(false);
-            fc.setAcceptAllFileFilterUsed(false);
-            int returnVal = fc.showSaveDialog(this);
+        int result = 0;
+        String openLocation = System.getProperty("user.dir");
+        JFileChooser fc = new JFileChooser(openLocation);
+        fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fc.setMultiSelectionEnabled(false);
+        fc.setAcceptAllFileFilterUsed(false);
+        int returnVal = fc.showSaveDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             String path = file.getAbsolutePath();
             path = path.replaceAll(".txt", "") + ".txt";
             File newFile = new File(path);
-
-            if (!file.exists()) {
-                try {
-                    FileWriter finalFile = new FileWriter(path);
-                    finalFile.close();
-                    fileCreated = false;
-                } catch (IOException ex) {
-                    Logger.getLogger(MAPPSGUI_V2.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
+            if (file.exists()) {
                 int input = JOptionPane.showConfirmDialog(mainPanel, "This playlist already exists. Would you like to overwrite it?",
                         "Duplicate tracks found", JOptionPane.YES_NO_OPTION);
                 if (input == JOptionPane.YES_OPTION) {
                     try {
                         FileWriter finalFile = new FileWriter(path);
                         finalFile.close();
-                        fileCreated = false;
+                        addPlaylistName(newFile.getName(), newFile.getAbsolutePath());
+
                     } catch (IOException ex) {
-                        Logger.getLogger(MAPPSGUI_V2.class.getName()).log(Level.SEVERE, null, ex);
+                        ex.printStackTrace();
                     }
-                } else {
-                    fileCreated = true;
+                }
+            } else {
+                try {
+                    FileWriter finalFile = new FileWriter(path);
+                    finalFile.close();
+                    addPlaylistName(newFile.getName(), newFile.getAbsolutePath());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             }
-        } while (fileCreated);
+        }
     }
 
-    private void playStopTracks() {
+    private void playSelectedTrack() {
 
+        List<Track> tracksSelected = albumTracksList.getSelectedValuesList();
+        List<PlaylistTrack> PLTSelected = playlistTracksList.getSelectedValuesList();
+        
+        String albumFolderDirectory = "";
+
+        if (tracksSelected.size() == 1) {
+            Album selectedTrackAlbum = (Album) albumNameCB.getSelectedItem();
+            Track selectedTrack = albumTracksList.getSelectedValue();
+            String trackNumber = selectedTrackAlbum.getTrackNumber(selectedTrack);
+            albumFolderDirectory = getAlbumFolderDirectory(selectedTrackAlbum);
+            System.out.println(albumFolderDirectory);
+            System.out.println(selectedTrackAlbum.getArtist() + trackNumber + selectedTrack.getName());
+            
+            String selectedTrackDirectory = getTrackDirectory(selectedTrackAlbum.getArtist(), trackNumber, selectedTrack.getName());
+            
+        } else if (PLTSelected.size() == 1) {
+            PlaylistTrack selectedPLT = playlistTracksList.getSelectedValue();
+            Album selectedPLTAlbum = selectedPLT.getAlbum();
+//            String trackNumber = selectedPLTAlbum.getTrackNumberPLT(selectedPLT);
+            albumFolderDirectory = getAlbumFolderDirectory(selectedPLTAlbum);
+            System.out.println(albumFolderDirectory);
+//            System.out.println(selectedPLTAlbum.getArtist() + trackNumber + selectedPLT.getName());
+            
+            
+//            String selectedPLTDirectory = getTrackDirectory(selectedPLTAlbum.getArtist(), trackNumber, selectedPLT.getName());
+            
+        }
     }
+
+    private String getAlbumFolderDirectory(Album album) {
+        File[] albumFolders = new File(mp3AlbumDirectory).listFiles();
+        String albumFolderDirectory = "";
+        String selectedAlbumTitle = album.getTitle();       
+        selectedAlbumTitle = selectedAlbumTitle.replaceAll(" ", "").toUpperCase().trim();              
+        int matches = 0;      
+        List<File> matchedFiles = new ArrayList<>();        
+        for (File albumFolder : albumFolders) {
+            String albumFolderName = albumFolder.getName().toUpperCase();
+            if (albumFolderName.endsWith(selectedAlbumTitle)) {
+                matches++;
+                matchedFiles.add(albumFolder);
+            }
+        }       
+        if(matchedFiles.size()==1){
+            albumFolderDirectory = matchedFiles.get(0).getAbsolutePath();
+        }
+        else if(matchedFiles.size() > 1){
+            String selectedAlbumArtist = album.getArtist().replaceAll("&", "");
+            selectedAlbumArtist = selectedAlbumArtist.replace("The ", "").replace(" ", "_");
+            for(File matchedFile : matchedFiles){
+                if(matchedFile.getName().startsWith(selectedAlbumArtist)){
+                    albumFolderDirectory = matchedFile.getAbsolutePath();
+                }
+            }
+        }        
+        return albumFolderDirectory;
+    }
+    
+    private String getTrackDirectory(String album, String trackNumber, String title){
+        
+        return "";
+    }
+    
 
     private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
         loadAC();
@@ -848,6 +906,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     private void albumTracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_albumTracksListMousePressed
         playlistTracksList.clearSelection();
+        playSelectedTrack();
     }//GEN-LAST:event_albumTracksListMousePressed
 
     private void savePLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePLMIActionPerformed
@@ -893,6 +952,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     private void playlistTracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistTracksListMousePressed
         albumTracksList.clearSelection();
+        playSelectedTrack();
     }//GEN-LAST:event_playlistTracksListMousePressed
 
     private void playlistNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playlistNameCBActionPerformed

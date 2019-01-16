@@ -100,6 +100,11 @@ public class Album {
         return formatter.format(tracks.size());
     }
     
+    public String getTrackNumber(Track track){
+        DecimalFormat formatter = new DecimalFormat("00");
+        return formatter.format(tracks.indexOf(track)+1);       
+    }
+    
     // override the equals method. Compares the getDetails method of two albums
     @Override
     public boolean equals(Object other){
