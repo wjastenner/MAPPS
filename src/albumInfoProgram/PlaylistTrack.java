@@ -39,7 +39,7 @@ public class PlaylistTrack extends Track {
     // return PlaylistTrack object as String
     @Override
     public String toString() { 
-        return this.duration + " - " + this.name + " (" + this.album + ")";
+        return (this.duration + " - " + this.name + " (" + this.album + ")").toUpperCase();
     }
 
 }

@@ -113,7 +113,7 @@ public class Album {
     // string builder? What are the benefits? Can trim?
     // convert and return album as string
     @Override
-    public String toString() {
-        return artist + " : " + title;
+    public String toString() {        
+        return (artist + " : " + title).toUpperCase();
     }
 }

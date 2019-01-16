@@ -36,18 +36,20 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        albumPanel = new javax.swing.JPanel();
         albumsTitle = new javax.swing.JLabel();
+        albumDurationLBL = new javax.swing.JLabel();
         albumNameCB = new javax.swing.JComboBox<>();
+        albumCoverImgLBL = new javax.swing.JLabel();
+        addTrackBTN = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         albumTracksList = new javax.swing.JList<>();
-        albumDurationLBL = new javax.swing.JLabel();
-        addTrackBTN = new javax.swing.JButton();
-        albumCoverImgLBL = new javax.swing.JLabel();
+        PLPanel = new javax.swing.JPanel();
         PLTitle = new javax.swing.JLabel();
         playlistNameCB = new javax.swing.JComboBox<>();
-        playlistDurationLBL = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         playlistTracksList = new javax.swing.JList<>();
+        playlistDurationLBL = new javax.swing.JLabel();
         removeTrackBTN = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -72,7 +74,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        mainPanel.setBackground(new java.awt.Color(51, 51, 51));
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        albumPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         albumsTitle.setBackground(new java.awt.Color(0, 0, 0));
         albumsTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -80,6 +84,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumsTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         albumsTitle.setText("ALBUMS");
         albumsTitle.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        albumDurationLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        albumDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
+        albumDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        albumDurationLBL.setText("TRACKS: 00 | DURATION: 00:00:00");
+        albumDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         albumNameCB.setBackground(new java.awt.Color(204, 204, 204));
         albumNameCB.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -95,6 +105,21 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
+        albumCoverImgLBL.setBackground(new java.awt.Color(0, 0, 0));
+        albumCoverImgLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/unknown_album.jpg"))); // NOI18N
+        albumCoverImgLBL.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        albumCoverImgLBL.setPreferredSize(new java.awt.Dimension(300, 300));
+
+        addTrackBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        addTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
+        addTrackBTN.setText("ADD TRACK TO PLAYLIST");
+        addTrackBTN.setEnabled(false);
+        addTrackBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTrackBTNActionPerformed(evt);
+            }
+        });
+
         jScrollPane5.setPreferredSize(new java.awt.Dimension(200, 132));
 
         albumTracksList.setBackground(new java.awt.Color(204, 204, 204));
@@ -106,26 +131,44 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(albumTracksList);
 
-        albumDurationLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        albumDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
-        albumDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        albumDurationLBL.setText("TRACKS: 00 | DURATION: 00:00:00");
-        albumDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        javax.swing.GroupLayout albumPanelLayout = new javax.swing.GroupLayout(albumPanel);
+        albumPanel.setLayout(albumPanelLayout);
+        albumPanelLayout.setHorizontalGroup(
+            albumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(albumPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(albumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(albumPanelLayout.createSequentialGroup()
+                        .addGroup(albumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(addTrackBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(albumNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(albumDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
+                        .addComponent(albumCoverImgLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(albumsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
+        );
+        albumPanelLayout.setVerticalGroup(
+            albumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(albumPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(albumsTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(albumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(albumCoverImgLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(albumPanelLayout.createSequentialGroup()
+                        .addComponent(albumNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(albumDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addTrackBTN)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        addTrackBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        addTrackBTN.setForeground(new java.awt.Color(255, 255, 255));
-        addTrackBTN.setText("Add Track to Playlist");
-        addTrackBTN.setEnabled(false);
-        addTrackBTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addTrackBTNActionPerformed(evt);
-            }
-        });
-
-        albumCoverImgLBL.setBackground(new java.awt.Color(0, 0, 0));
-        albumCoverImgLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/unknown_album.jpg"))); // NOI18N
-        albumCoverImgLBL.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        albumCoverImgLBL.setPreferredSize(new java.awt.Dimension(300, 300));
+        PLPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         PLTitle.setBackground(new java.awt.Color(70, 50, 70));
         PLTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -145,12 +188,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
-        playlistDurationLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        playlistDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
-        playlistDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        playlistDurationLBL.setText("TRACKS 00: | DURATION: 00:00:00");
-        playlistDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         jScrollPane7.setPreferredSize(new java.awt.Dimension(200, 132));
 
         playlistTracksList.setBackground(new java.awt.Color(204, 204, 204));
@@ -163,9 +200,15 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(playlistTracksList);
 
+        playlistDurationLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        playlistDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
+        playlistDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        playlistDurationLBL.setText("TRACKS 00: | DURATION: 00:00:00");
+        playlistDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
         removeTrackBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        removeTrackBTN.setForeground(new java.awt.Color(255, 255, 255));
-        removeTrackBTN.setText("Remove Track from Playlist");
+        removeTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
+        removeTrackBTN.setText("REMOVE TRACK FROM PLAYLIST");
         removeTrackBTN.setEnabled(false);
         removeTrackBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,58 +216,55 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout PLPanelLayout = new javax.swing.GroupLayout(PLPanel);
+        PLPanel.setLayout(PLPanelLayout);
+        PLPanelLayout.setHorizontalGroup(
+            PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PLPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(addTrackBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(albumNameCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(albumDurationLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14)
-                        .addComponent(albumCoverImgLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(albumsTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(PLTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(removeTrackBTN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(playlistDurationLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(playlistNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        PLPanelLayout.setVerticalGroup(
+            PLPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PLPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PLTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(playlistNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(playlistDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(removeTrackBTN)
                 .addGap(14, 14, 14))
+        );
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(albumPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(PLPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PLTitle)
-                    .addComponent(albumsTitle))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(playlistNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(playlistDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removeTrackBTN))
-                    .addComponent(albumCoverImgLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(albumNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(albumDurationLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addTrackBTN)))
-                .addGap(14, 14, 14))
+                .addGap(0, 0, 0)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(albumPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PLPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         menuBar.setBackground(new java.awt.Color(0, 0, 0));
@@ -356,12 +396,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -850,6 +890,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ACSortMI;
+    private javax.swing.JPanel PLPanel;
     private javax.swing.JLabel PLTitle;
     private javax.swing.JMenuItem SortByAlbumMI;
     private javax.swing.JMenuItem SortByArtistMI;
@@ -858,6 +899,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JMenuItem albumCoverLocationMI;
     private javax.swing.JLabel albumDurationLBL;
     private javax.swing.JComboBox<Album> albumNameCB;
+    private javax.swing.JPanel albumPanel;
     private javax.swing.JList<Track> albumTracksList;
     private javax.swing.JLabel albumsTitle;
     private javax.swing.JMenuItem clearPLMI;

@@ -52,7 +52,7 @@ public class Track{
 
     // return track object as string
     @Override
-    public String toString() {
-        return this.duration + " - " + this.name;
+    public String toString() {             
+        return (this.duration + " - " + this.name).toUpperCase();
     }
 }
