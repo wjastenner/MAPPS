@@ -30,12 +30,15 @@ public class AlbumCollection {
             Album album = null;
 
             boolean albumExists = false;
+            
+            boolean empty = true;
 
             // while the reader can read a line in decide whether that line is
             // an album or track
             // if it is an album create a new album
             // if it is a track add that track to the previously created album
             while ((line = reader.readLine()) != null) {
+                empty = false;
                 if (line.contains(" : ") && line.contains("(") && line.contains(")")) {
                     return false;
                 } else if (line.contains(" : ")) {
@@ -52,6 +55,13 @@ public class AlbumCollection {
                     album.addTrack(track);
                 }
             }
+            
+            if(empty){
+                return false;
+            }
+
+
+            
             reader.close();
         } catch (Exception ex) {
             System.out.println("Album collection import was unsuccessful");
