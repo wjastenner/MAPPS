@@ -143,6 +143,12 @@ public class AlbumCollection {
     public List<Album> getAlbums() {
         return Collections.unmodifiableList(albums);
     }
+    
+    public String getTrackNumber(Album album, String name){
+        int albumNumber = albums.indexOf(album);
+        Album selectedAlbum = albums.get(albumNumber);        
+        return selectedAlbum.getTrackNumber(name);
+    }
 
     // convert and return album collection as string
     @Override

@@ -100,9 +100,16 @@ public class Album {
         return formatter.format(tracks.size());
     }
     
-    public String getTrackNumber(Track track){
+    public String getTrackNumber(String trackStr){
         DecimalFormat formatter = new DecimalFormat("00");
-        return formatter.format(tracks.indexOf(track)+1);       
+        int counter = 0;       
+        for(Track track : tracks){
+            counter++;
+            if(track.getName().equals(trackStr)){
+                return formatter.format(counter);
+            }
+        }       
+        return "track not found";       
     }
     
     // override the equals method. Compares the getDetails method of two albums

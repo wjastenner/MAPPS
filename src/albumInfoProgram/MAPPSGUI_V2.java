@@ -804,28 +804,29 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         List<PlaylistTrack> PLTSelected = playlistTracksList.getSelectedValuesList();
         
         String albumFolderDirectory = "";
+        String trackNumber;
+        Album selectedAlbum;
+        String mp3Directory;
 
         if (tracksSelected.size() == 1) {
-            Album selectedTrackAlbum = (Album) albumNameCB.getSelectedItem();
+            selectedAlbum = (Album) albumNameCB.getSelectedItem();
             Track selectedTrack = albumTracksList.getSelectedValue();
-            String trackNumber = selectedTrackAlbum.getTrackNumber(selectedTrack);
-            albumFolderDirectory = getAlbumFolderDirectory(selectedTrackAlbum);
+            trackNumber = ac.getTrackNumber(selectedAlbum, selectedTrack.getName());
+            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);  
+            mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedTrack.getName());
             System.out.println(albumFolderDirectory);
-            System.out.println(selectedTrackAlbum.getArtist() + trackNumber + selectedTrack.getName());
-            
-            String selectedTrackDirectory = getTrackDirectory(selectedTrackAlbum.getArtist(), trackNumber, selectedTrack.getName());
+            System.out.println(selectedAlbum.getArtist() + " " + trackNumber + " " + selectedTrack.getName());
+            System.out.println(mp3Directory);
             
         } else if (PLTSelected.size() == 1) {
             PlaylistTrack selectedPLT = playlistTracksList.getSelectedValue();
-            Album selectedPLTAlbum = selectedPLT.getAlbum();
-//            String trackNumber = selectedPLTAlbum.getTrackNumberPLT(selectedPLT);
-            albumFolderDirectory = getAlbumFolderDirectory(selectedPLTAlbum);
+            selectedAlbum = selectedPLT.getAlbum();
+            trackNumber = ac.getTrackNumber(selectedAlbum, selectedPLT.getName());
+            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);          
+            mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedPLT.getName());
             System.out.println(albumFolderDirectory);
-//            System.out.println(selectedPLTAlbum.getArtist() + trackNumber + selectedPLT.getName());
-            
-            
-//            String selectedPLTDirectory = getTrackDirectory(selectedPLTAlbum.getArtist(), trackNumber, selectedPLT.getName());
-            
+            System.out.println(selectedAlbum.getArtist() + " " + trackNumber + " " + selectedPLT.getName());
+            System.out.println(mp3Directory);           
         }
     }
 
@@ -858,9 +859,19 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         return albumFolderDirectory;
     }
     
-    private String getTrackDirectory(String album, String trackNumber, String title){
-        
-        return "";
+    private String getTrackDirectory(String directory, String artist, String trackNumber, String trackTitle){
+        artist = artist.replaceAll("'", "").replaceAll("[& ]", "_");
+        trackNumber = "_-_" + trackNumber + "_-_";
+        trackTitle = trackTitle.replaceAll(" ", "_") + ".mp3";
+        String selectedTrackEdit = artist + trackNumber + trackTitle;
+        System.out.println(selectedTrackEdit);        
+        File[] mp3Files = new File(directory).listFiles();
+        for(File mp3File : mp3Files){
+            if(mp3File.getName().equals(selectedTrackEdit)){
+                return mp3File.getAbsolutePath();
+            }
+        }
+        return "no match found";
     }
     
 

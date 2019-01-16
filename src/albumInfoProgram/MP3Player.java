@@ -7,17 +7,17 @@ import java.io.FileInputStream;
 import javax.swing.JFileChooser;
 import javazoom.jl.player.Player;
 
-public class MP3Player0 {
+public class MP3Player {
 
     private String filename;
     private Player player;
 
     // a default constructor
-    public MP3Player0() {
+    public MP3Player() {
     }
 
     // Constructor takes a given file name 
-    public MP3Player0(String filename) {
+    public MP3Player(String filename) {
         this.filename = filename;
     }
 
@@ -87,7 +87,7 @@ public class MP3Player0 {
 
         //MP3Player0 mp3 = new MP3Player0(filename); 
         // creat an instance of MP3Player0 using default constructor
-        MP3Player0 mp3 = new MP3Player0();
+        MP3Player mp3 = new MP3Player();
         mp3.play(filename);
         System.out.println("\n Playing mp3 file:" + filename);
         // the programn will stop when the track ends. 
