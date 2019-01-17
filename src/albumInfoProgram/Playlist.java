@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import static java.util.Comparator.comparing;
 import java.util.List;
 import static java.util.Comparator.comparing;
 
@@ -33,18 +32,32 @@ public class Playlist {
 
             String line;
 
+            int counter = 0;
+            int matches = 0;
+
             // while the reader can read a line in split the line and remove closing bracket
             // Use the track name and album to get track duration
             // create new PlaylistTrack and add it to ArrayList tracks
             while ((line = reader.readLine()) != null) {
+                counter++;
                 PlaylistTrack track = createPlaylistTrack(line);
                 if (track.getDuration() != null) {
                     tracks.add(track);
-                } else {
-                    issues = 1;
+                    matches++;
                 }
             }
             reader.close();
+
+            if (counter == 0) {
+                issues = 4;
+            } else if (matches == 0) {
+                issues = 3;
+            } else if (matches < counter) {
+                issues = 1;
+            } else if (matches == counter) {
+                issues = 0;
+            }
+
         } catch (Exception ex) {
             issues = 2;
         }
@@ -82,10 +95,10 @@ public class Playlist {
         }
         return duration;
     }
-    
+
     // return number of tracks in playlists
-    public String getSize(){
-        DecimalFormat formatter = new DecimalFormat("00");        
+    public String getSize() {
+        DecimalFormat formatter = new DecimalFormat("00");
         return formatter.format(tracks.size());
     }
 

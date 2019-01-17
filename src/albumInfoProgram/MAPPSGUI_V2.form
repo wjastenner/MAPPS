@@ -58,12 +58,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="savePLMIActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="savePLAsMI">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Save Playlist As"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="editMenu">
@@ -439,8 +433,8 @@
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="PLTitle" max="32767" attributes="0"/>
                               <Component id="jScrollPane7" max="32767" attributes="0"/>
-                              <Component id="playlistDurationLBL" max="32767" attributes="0"/>
-                              <Component id="playlistNameCB" max="32767" attributes="0"/>
+                              <Component id="PLTDurationLBL" max="32767" attributes="0"/>
+                              <Component id="PLNameCB" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="removeTrackBTN" min="-2" pref="176" max="-2" attributes="0"/>
@@ -458,9 +452,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="PLTitle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="playlistNameCB" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="PLNameCB" min="-2" pref="30" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="playlistDurationLBL" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="PLTDurationLBL" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jScrollPane7" min="-2" pref="200" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -490,7 +484,7 @@
                 <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="playlistNameCB">
+            <Component class="javax.swing.JComboBox" name="PLNameCB">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -512,7 +506,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playlistNameCBActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PLNameCBActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -558,7 +552,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="playlistDurationLBL">
+            <Component class="javax.swing.JLabel" name="PLTDurationLBL">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Impact" size="18" style="1"/>
