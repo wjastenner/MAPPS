@@ -1011,7 +1011,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             albumInfo = selectedAlbum.getArtist().toUpperCase();
             trackInfo = selectedTrack.getName().toUpperCase();
         } else if (selectedPLT != null && selectedPLT.getAlbumDetails() != null) {
-            albumInfo = selectedPLT.getAlbumDetails().toUpperCase();
+            albumInfo = selectedPLT.getAlbum().getArtist().toUpperCase();
             trackInfo = selectedPLT.getName().toUpperCase();
         }
         return new String[]{albumInfo, trackInfo};
