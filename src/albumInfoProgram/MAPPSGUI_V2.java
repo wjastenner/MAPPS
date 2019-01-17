@@ -96,7 +96,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         albumsTitle.setBackground(new java.awt.Color(0, 0, 0));
-        albumsTitle.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
+        albumsTitle.setFont(new java.awt.Font("Impact", 1, 24)); // NOI18N
         albumsTitle.setForeground(new java.awt.Color(255, 255, 255));
         albumsTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         albumsTitle.setText("ALBUMS");
@@ -106,11 +106,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         albumDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         albumDurationLBL.setText("TRACKS: 00 | DURATION: 00:00:00");
+        albumDurationLBL.setEnabled(false);
         albumDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         albumNameCB.setBackground(new java.awt.Color(204, 204, 204));
         albumNameCB.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         albumNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        albumNameCB.setEnabled(false);
         albumNameCB.setMaximumSize(new java.awt.Dimension(361, 30));
         albumNameCB.setMinimumSize(new java.awt.Dimension(361, 30));
         albumNameCB.setName(""); // NOI18N
@@ -127,6 +129,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         addTrackBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
         addTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
         addTrackBTN.setText("ADD TRACK TO PLAYLIST");
+        addTrackBTN.setEnabled(false);
         addTrackBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addTrackBTNActionPerformed(evt);
@@ -139,6 +142,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         tracksList.setBackground(new java.awt.Color(51, 51, 51));
         tracksList.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         tracksList.setForeground(new java.awt.Color(255, 255, 255));
+        tracksList.setEnabled(false);
         tracksList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tracksListMousePressed(evt);
@@ -186,7 +190,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         PLPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         PLTitle.setBackground(new java.awt.Color(70, 50, 70));
-        PLTitle.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
+        PLTitle.setFont(new java.awt.Font("Impact", 1, 24)); // NOI18N
         PLTitle.setForeground(new java.awt.Color(255, 255, 255));
         PLTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PLTitle.setText("PLAYLISTS");
@@ -195,6 +199,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         playlistNameCB.setBackground(new java.awt.Color(204, 204, 204));
         playlistNameCB.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         playlistNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        playlistNameCB.setEnabled(false);
         playlistNameCB.setPreferredSize(new java.awt.Dimension(361, 26));
         playlistNameCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,6 +213,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         PLTList.setBackground(new java.awt.Color(51, 51, 51));
         PLTList.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         PLTList.setForeground(new java.awt.Color(255, 255, 255));
+        PLTList.setEnabled(false);
         PLTList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 PLTListMousePressed(evt);
@@ -219,11 +225,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         playlistDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         playlistDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         playlistDurationLBL.setText("TRACKS 00: | DURATION: 00:00:00");
+        playlistDurationLBL.setEnabled(false);
         playlistDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         removeTrackBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
         removeTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
         removeTrackBTN.setText("REMOVE TRACK");
+        removeTrackBTN.setEnabled(false);
         removeTrackBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeTrackBTNActionPerformed(evt);
@@ -233,6 +241,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         savePLBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
         savePLBTN.setForeground(new java.awt.Color(51, 51, 51));
         savePLBTN.setText("SAVE");
+        savePLBTN.setEnabled(false);
         savePLBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 savePLBTNActionPerformed(evt);
@@ -279,6 +288,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         playBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         playBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/play_btn.png"))); // NOI18N
+        playBTN.setEnabled(false);
         playBTN.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 playBTNMouseReleased(evt);
@@ -287,6 +297,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         pauseBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pauseBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/pause_btn.png"))); // NOI18N
+        pauseBTN.setEnabled(false);
         pauseBTN.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pauseBTNMouseReleased(evt);
@@ -295,6 +306,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         stopBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         stopBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/stop_btn.png"))); // NOI18N
+        stopBTN.setEnabled(false);
         stopBTN.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 stopBTNMouseReleased(evt);
@@ -521,6 +533,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             boolean acValid = ac.read(file);
             if (acValid) {
                 displayAlbumNames();
+                loadPLMI.setEnabled(true);
+                createPLMI.setEnabled(true);
+                editMenuAC.setEnabled(true);
+                albumNameCB.setEnabled(true);
+                tracksList.setEnabled(true);
+                albumDurationLBL.setEnabled(true);
                 result = 1;
             } else {
                 JOptionPane.showMessageDialog(mainPanel, "The album collection is empty or not in the correct format.");
@@ -651,7 +669,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                         Object[] options = {"Load New Album Collection", "Proceed", "Cancel"};
                         int input = JOptionPane.showOptionDialog(mainPanel,
                                 "The playlist contains tracks that can not be found in the album collection.\n"
-                                + "These tracks can not be loaded and by proceeding will be removed permanently from the playlist.",
+                                + "These tracks can not be loaded but by proceeding will be removed permanently from the playlist.",
                                 "Unable to find tracks",
                                 JOptionPane.YES_NO_CANCEL_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,
@@ -872,9 +890,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         }
 
-        if (tracksSelected.size() > 1 || PLTSelected.size() > 1) {
+        if(ac.toString().isEmpty()){
+            JOptionPane.showMessageDialog(mainPanel, "Please load in an album collection.");
+        }      
+        else if (tracksSelected.size() > 1 || PLTSelected.size() > 1) {
             JOptionPane.showMessageDialog(mainPanel, "Please select one track.");
-        } else if (selectedTrack == null && selectedPLT == null) {
+        }
+        else if (selectedTrack == null && selectedPLT == null) {
             JOptionPane.showMessageDialog(mainPanel, "Please select a track.");
         }
 
@@ -942,8 +964,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         } else if (selectedPLT != null && selectedPLT.getAlbumDetails() != null) {
             albumInfo = selectedPLT.getAlbumDetails().toUpperCase();
             trackInfo = selectedPLT.getName().toUpperCase();
-        }        
-        return new String[] {albumInfo, trackInfo};       
+        }
+        return new String[]{albumInfo, trackInfo};
     }
 
     private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
@@ -1051,10 +1073,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private void playBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playBTNMouseReleased
 
         String[] playingDetails = getPlayingDetails();
-        
+
+        String mp3Directory = getMP3Directory();
+
         switch (playerStatus) {
             case "deactivated":
-                if (!getMP3Directory().equals("unknown")) {
+                if (!mp3Directory.equals("unknown")) {
                     mp3Player.play(getMP3Directory());
                     playerStatus = "playing";
                     playerLBL1.setText(playingDetails[0]);
@@ -1062,9 +1086,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 }
                 break;
             case "playing":
-                if (!mp3Player.getPath().equals(getMP3Directory()) && !getMP3Directory().equals("unknown")) {
+                if (!mp3Player.getPath().equals(mp3Directory) && !mp3Directory.equals("unknown")) {
                     mp3Player.stop();
                     mp3Player.play(getMP3Directory());
+                    playerLBL1.setText(playingDetails[0]);
+                    playerLBL2.setText(playingDetails[1]);
                 }
                 break;
             case "paused":
@@ -1072,9 +1098,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 playerStatus = "playing";
                 break;
             case "stopped":
-                if (!getMP3Directory().equals("unknown")) {
-                    mp3Player.play(getMP3Directory());
+                if (!mp3Directory.equals("unknown")) {
+                    mp3Player.play(mp3Directory);
                     playerStatus = "playing";
+                    playerLBL1.setText(playingDetails[0]);
+                    playerLBL2.setText(playingDetails[1]);
                 }
                 break;
         }
@@ -1083,16 +1111,23 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }//GEN-LAST:event_playBTNMouseReleased
 
     private void stopBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopBTNMouseReleased
+
+        String mp3Directory = getMP3Directory();
+
         switch (playerStatus) {
             case "deactivated":
                 break;
             case "playing":
                 mp3Player.stop();
                 playerStatus = "stopped";
+                playerLBL1.setText("");
+                playerLBL2.setText("");
                 break;
             case "paused":
                 mp3Player.stop();
                 playerStatus = "stopped";
+                playerLBL1.setText("");
+                playerLBL2.setText("");
                 break;
             case "stopped":
                 break;
@@ -1102,6 +1137,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }//GEN-LAST:event_stopBTNMouseReleased
 
     private void pauseBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBTNMouseReleased
+        
+        String mp3Directory = getMP3Directory();
+        
         switch (playerStatus) {
             case "playing":
                 mp3Player.pause();
