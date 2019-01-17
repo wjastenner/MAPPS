@@ -27,6 +27,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     String mp3AlbumDirectory;
     Playlist playlist;
     MP3Player mp3Player;
+    String playerStatus;
 
     public MAPPSGUI_V2() {
         initComponents();
@@ -36,6 +37,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         mp3AlbumDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "albums";
         playlist = new Playlist(ac);
         mp3Player = new MP3Player();
+        playerStatus = "deactivated";
     }
 
     @SuppressWarnings("unchecked")
@@ -50,20 +52,21 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumCoverImgLBL = new javax.swing.JLabel();
         addTrackBTN = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        albumTracksList = new javax.swing.JList<>();
+        tracksList = new javax.swing.JList<>();
         PLPanel = new javax.swing.JPanel();
         PLTitle = new javax.swing.JLabel();
         playlistNameCB = new javax.swing.JComboBox<>();
         jScrollPane7 = new javax.swing.JScrollPane();
-        playlistTracksList = new javax.swing.JList<>();
+        PLTList = new javax.swing.JList<>();
         playlistDurationLBL = new javax.swing.JLabel();
         removeTrackBTN = new javax.swing.JButton();
         savePLBTN = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        playerPanel = new javax.swing.JPanel();
         playBTN = new javax.swing.JLabel();
-        albumsTitle1 = new javax.swing.JLabel();
-        stopBTN = new javax.swing.JLabel();
         pauseBTN = new javax.swing.JLabel();
+        stopBTN = new javax.swing.JLabel();
+        playerLBL2 = new javax.swing.JLabel(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/displayLBLImg2.png")));
+        playerLBL1 = new javax.swing.JLabel(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/displayLBLImg1.png")));
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         loadMenu = new javax.swing.JMenu();
@@ -132,14 +135,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         jScrollPane5.setPreferredSize(new java.awt.Dimension(200, 132));
 
-        albumTracksList.setBackground(new java.awt.Color(204, 204, 204));
-        albumTracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        albumTracksList.addMouseListener(new java.awt.event.MouseAdapter() {
+        tracksList.setBackground(new java.awt.Color(204, 204, 204));
+        tracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        tracksList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                albumTracksListMousePressed(evt);
+                tracksListMousePressed(evt);
             }
         });
-        jScrollPane5.setViewportView(albumTracksList);
+        jScrollPane5.setViewportView(tracksList);
 
         javax.swing.GroupLayout albumPanelLayout = new javax.swing.GroupLayout(albumPanel);
         albumPanel.setLayout(albumPanelLayout);
@@ -199,14 +202,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         jScrollPane7.setPreferredSize(new java.awt.Dimension(200, 132));
 
-        playlistTracksList.setBackground(new java.awt.Color(204, 204, 204));
-        playlistTracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        playlistTracksList.addMouseListener(new java.awt.event.MouseAdapter() {
+        PLTList.setBackground(new java.awt.Color(204, 204, 204));
+        PLTList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        PLTList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                playlistTracksListMousePressed(evt);
+                PLTListMousePressed(evt);
             }
         });
-        jScrollPane7.setViewportView(playlistTracksList);
+        jScrollPane7.setViewportView(PLTList);
 
         playlistDurationLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         playlistDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
@@ -268,28 +271,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 .addGap(14, 14, 14))
         );
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        playerPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         playBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         playBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/play_btn.png"))); // NOI18N
         playBTN.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 playBTNMouseReleased(evt);
-            }
-        });
-
-        albumsTitle1.setBackground(new java.awt.Color(0, 0, 0));
-        albumsTitle1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        albumsTitle1.setForeground(new java.awt.Color(255, 255, 255));
-        albumsTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        albumsTitle1.setText("CURRENTLY PLAYING - ");
-        albumsTitle1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
-        stopBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        stopBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/stop_btn.png"))); // NOI18N
-        stopBTN.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                stopBTNMouseReleased(evt);
             }
         });
 
@@ -301,40 +289,49 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        stopBTN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        stopBTN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/stop_btn.png"))); // NOI18N
+        stopBTN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                stopBTNMouseReleased(evt);
+            }
+        });
+
+        playerLBL2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        playerLBL2.setForeground(new java.awt.Color(51, 51, 51));
+        playerLBL2.setHorizontalTextPosition(JLabel.CENTER); playerLBL2.setVerticalTextPosition(JLabel.CENTER);
+
+        playerLBL1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        playerLBL1.setForeground(new java.awt.Color(51, 51, 51));
+        playerLBL2.setHorizontalTextPosition(JLabel.CENTER); playerLBL2.setVerticalTextPosition(JLabel.CENTER);
+
+        javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
+        playerPanel.setLayout(playerPanelLayout);
+        playerPanelLayout.setHorizontalGroup(
+            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playerPanelLayout.createSequentialGroup()
+                .addComponent(playerLBL1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(stopBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(playBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(playBTN)
                 .addGap(18, 18, 18)
                 .addComponent(pauseBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(405, 405, 405))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(albumsTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(playerLBL2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(albumsTitle1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(playBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(stopBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(pauseBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(138, Short.MAX_VALUE))
+        playerPanelLayout.setVerticalGroup(
+            playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerPanelLayout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(pauseBTN)
+                    .addComponent(stopBTN)
+                    .addComponent(playBTN)
+                    .addComponent(playerLBL2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playerLBL1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -342,14 +339,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addComponent(albumPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(PLPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(4, 4, 4))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(playerPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
+                        .addComponent(albumPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(PLPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, 0))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,9 +354,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(albumPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PLPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(4, 4, 4)
+                .addComponent(playerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
         );
 
         menuBar.setBackground(new java.awt.Color(0, 0, 0));
@@ -493,11 +489,16 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -542,7 +543,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             Album selectedAlbum = (Album) albumNameCB.getSelectedItem();
 
             DefaultListModel tracksListGUI = new DefaultListModel();
-            albumTracksList.setModel(tracksListGUI);
+            tracksList.setModel(tracksListGUI);
             List<Track> tracks = selectedAlbum.getTracks();
             for (Track track : tracks) {
                 tracksListGUI.addElement(track);
@@ -687,7 +688,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private void displayPlaylistDetails() {
         List<PlaylistTrack> tracks = playlist.getTracks();
         DefaultListModel tracksListGUI = new DefaultListModel();
-        playlistTracksList.setModel(tracksListGUI);
+        PLTList.setModel(tracksListGUI);
         for (PlaylistTrack track : tracks) {
             tracksListGUI.addElement(track);
         }
@@ -719,7 +720,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }
 
     private void removeTracksPL() {
-        int[] trackNumber = playlistTracksList.getSelectedIndices();
+        int[] trackNumber = PLTList.getSelectedIndices();
         playlist.remove(trackNumber);
         savePlaylist();
         displayPlaylistDetails();
@@ -742,7 +743,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private void addTracksPL() {
 
         Album album = (Album) albumNameCB.getSelectedItem();
-        List<Track> selectedTracks = albumTracksList.getSelectedValuesList();
+        List<Track> selectedTracks = tracksList.getSelectedValuesList();
         ArrayList<PlaylistTrack> playlistTracks = new ArrayList<>();
         for (Track track : selectedTracks) {
             playlistTracks.add(new PlaylistTrack(album, track.getDuration(), track.getName()));
@@ -793,9 +794,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         displayPlaylistDetails();
     }
 
-    private void deletePL() {
-    }
-
     private void createPlaylist() {
 
         int result = 0;
@@ -836,30 +834,51 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }
 
     private String getMP3Directory() {
-        List<Track> tracksSelected = albumTracksList.getSelectedValuesList();
-        List<PlaylistTrack> PLTSelected = playlistTracksList.getSelectedValuesList();
+        List<Track> tracksSelected = tracksList.getSelectedValuesList();
+        List<PlaylistTrack> PLTSelected = PLTList.getSelectedValuesList();
         String albumFolderDirectory = "";
         String trackNumber;
         Album selectedAlbum;
         String mp3Directory = "unknown";
+        Track selectedTrack = null;
+        PlaylistTrack selectedPLT = null;
+
         if (tracksSelected.size() == 1) {
             selectedAlbum = (Album) albumNameCB.getSelectedItem();
-            Track selectedTrack = albumTracksList.getSelectedValue();
+            selectedTrack = tracksList.getSelectedValue();
             trackNumber = ac.getTrackNumber(selectedAlbum, selectedTrack.getName());
-            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);
-            mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedTrack.getName());
+
+            if (!getAlbumFolderDirectory(selectedAlbum).equals("unknown")) {
+                albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);
+                mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedTrack.getName());
+            } else {
+                JOptionPane.showMessageDialog(mainPanel, "An mp3 for the selected track could not be found.");
+            }
+
         } else if (PLTSelected.size() == 1) {
-            PlaylistTrack selectedPLT = playlistTracksList.getSelectedValue();
+            selectedPLT = PLTList.getSelectedValue();
             selectedAlbum = selectedPLT.getAlbum();
             trackNumber = ac.getTrackNumber(selectedAlbum, selectedPLT.getName());
-            albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);
-            mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedPLT.getName());
+
+            if (!getAlbumFolderDirectory(selectedAlbum).equals("unknown")) {
+                albumFolderDirectory = getAlbumFolderDirectory(selectedAlbum);
+                mp3Directory = getTrackDirectory(albumFolderDirectory, selectedAlbum.getArtist(), trackNumber, selectedPLT.getName());
+            } else {
+                JOptionPane.showMessageDialog(mainPanel, "An mp3 for the selected track could not be found.");
+            }
+        }
+
+        if (tracksSelected.size() > 1 || PLTSelected.size() > 1) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select one track.");
+        } else if (selectedTrack == null && selectedPLT == null) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select a track.");
         }
 
         return mp3Directory;
     }
 
     private String getAlbumFolderDirectory(Album album) {
+
         File[] albumFolders = new File(mp3AlbumDirectory).listFiles();
         String albumFolderDirectory = "";
         String selectedAlbumTitle = album.getTitle();
@@ -883,6 +902,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                     albumFolderDirectory = matchedFile.getAbsolutePath();
                 }
             }
+        } else {
+            return "unknown";
         }
         return albumFolderDirectory;
     }
@@ -892,7 +913,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         trackNumber = "_-_" + trackNumber + "_-_";
         trackTitle = trackTitle.trim().replaceAll(" ", "_") + ".mp3";
         String selectedTrackEdit = artist + trackNumber + trackTitle;
+
         File[] mp3Files = new File(directory).listFiles();
+
         for (File mp3File : mp3Files) {
             System.out.println(selectedTrackEdit);
             System.out.println(mp3File.getName());
@@ -901,6 +924,22 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         }
         return "no match found";
+    }
+
+    private String[] getPlayingDetails() {
+        Album selectedAlbum = (Album) albumNameCB.getSelectedItem();
+        Track selectedTrack = tracksList.getSelectedValue();
+        PlaylistTrack selectedPLT = PLTList.getSelectedValue();
+        String albumInfo = "";
+        String trackInfo = "";
+        if (selectedTrack != null && selectedAlbum != null) {
+            albumInfo = selectedAlbum.getDetails().toUpperCase();
+            trackInfo = selectedTrack.getName().toUpperCase();
+        } else if (selectedPLT != null && selectedPLT.getAlbumDetails() != null) {
+            albumInfo = selectedPLT.getAlbumDetails().toUpperCase();
+            trackInfo = selectedPLT.getName().toUpperCase();
+        }        
+        return new String[] {albumInfo, trackInfo};       
     }
 
     private void loadACMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadACMIActionPerformed
@@ -943,9 +982,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         renamePlaylist();
     }//GEN-LAST:event_renamePLMIActionPerformed
 
-    private void albumTracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_albumTracksListMousePressed
-        playlistTracksList.clearSelection();
-    }//GEN-LAST:event_albumTracksListMousePressed
+    private void tracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tracksListMousePressed
+        PLTList.clearSelection();
+    }//GEN-LAST:event_tracksListMousePressed
 
     private void savePLMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePLMIActionPerformed
         savePlaylist();
@@ -985,9 +1024,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         removeTracksPL();
     }//GEN-LAST:event_removeTrackBTNActionPerformed
 
-    private void playlistTracksListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistTracksListMousePressed
-        albumTracksList.clearSelection();
-    }//GEN-LAST:event_playlistTracksListMousePressed
+    private void PLTListMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PLTListMousePressed
+        tracksList.clearSelection();
+    }//GEN-LAST:event_PLTListMousePressed
 
     private void playlistNameCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playlistNameCBActionPerformed
         if (playlistNameCB.getSelectedItem() != null) {
@@ -1007,21 +1046,66 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
     private void playBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playBTNMouseReleased
 
-        if(mp3Player.getPausePoint()==0){
-            mp3Player.play(getMP3Directory());
-        }
-        else{
-            mp3Player.resume();
-        }
+        String[] playingDetails = getPlayingDetails();
         
+        switch (playerStatus) {
+            case "deactivated":
+                if (!getMP3Directory().equals("unknown")) {
+                    mp3Player.play(getMP3Directory());
+                    playerStatus = "playing";
+                    playerLBL1.setText(playingDetails[0]);
+                    playerLBL2.setText(playingDetails[1]);
+                }
+                break;
+            case "playing":
+                if (!mp3Player.getPath().equals(getMP3Directory()) && !getMP3Directory().equals("unknown")) {
+                    mp3Player.stop();
+                    mp3Player.play(getMP3Directory());
+                }
+                break;
+            case "paused":
+                mp3Player.resume();
+                playerStatus = "playing";
+                break;
+            case "stopped":
+                if (!getMP3Directory().equals("unknown")) {
+                    mp3Player.play(getMP3Directory());
+                    playerStatus = "playing";
+                }
+                break;
+        }
+
+        System.out.println(playerStatus);
     }//GEN-LAST:event_playBTNMouseReleased
 
     private void stopBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopBTNMouseReleased
-        mp3Player.stop();      
+        switch (playerStatus) {
+            case "deactivated":
+                break;
+            case "playing":
+                mp3Player.stop();
+                playerStatus = "stopped";
+                break;
+            case "paused":
+                mp3Player.stop();
+                playerStatus = "stopped";
+                break;
+            case "stopped":
+                break;
+        }
+
+        System.out.println(playerStatus);
     }//GEN-LAST:event_stopBTNMouseReleased
 
     private void pauseBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBTNMouseReleased
-        mp3Player.pause();
+        switch (playerStatus) {
+            case "playing":
+                mp3Player.pause();
+                playerStatus = "paused";
+                break;
+        }
+
+        System.out.println(playerStatus);
     }//GEN-LAST:event_pauseBTNMouseReleased
 
     public static void main(String args[]) {
@@ -1068,6 +1152,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ACSortMI;
     private javax.swing.JPanel PLPanel;
+    private javax.swing.JList<PlaylistTrack> PLTList;
     private javax.swing.JLabel PLTitle;
     private javax.swing.JMenuItem SortByAlbumMI;
     private javax.swing.JMenuItem SortByArtistMI;
@@ -1077,16 +1162,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JLabel albumDurationLBL;
     private javax.swing.JComboBox<Album> albumNameCB;
     private javax.swing.JPanel albumPanel;
-    private javax.swing.JList<Track> albumTracksList;
     private javax.swing.JLabel albumsTitle;
-    private javax.swing.JLabel albumsTitle1;
     private javax.swing.JMenuItem clearPLMI;
     private javax.swing.JMenuItem createPLMI;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu editMenuAC;
     private javax.swing.JMenu editMenuPL;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JMenuItem loadACMI;
@@ -1096,9 +1178,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel pauseBTN;
     private javax.swing.JLabel playBTN;
+    private javax.swing.JLabel playerLBL1;
+    private javax.swing.JLabel playerLBL2;
+    private javax.swing.JPanel playerPanel;
     private javax.swing.JLabel playlistDurationLBL;
     private javax.swing.JComboBox<String> playlistNameCB;
-    private javax.swing.JList<PlaylistTrack> playlistTracksList;
     private javax.swing.JMenuItem removePLMI;
     private javax.swing.JButton removeTrackBTN;
     private javax.swing.JMenuItem renamePLMI;
@@ -1107,6 +1191,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     private javax.swing.JMenuItem savePLMI;
     private javax.swing.JMenu settings;
     private javax.swing.JLabel stopBTN;
+    private javax.swing.JList<Track> tracksList;
     // End of variables declaration//GEN-END:variables
 
 }

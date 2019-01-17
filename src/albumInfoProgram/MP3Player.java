@@ -19,6 +19,7 @@ public class MP3Player {
     public MP3Player()
     {
         pausePoint = 0;
+        songLength = 0;
     }
 
     public void stop() {
@@ -36,14 +37,13 @@ public class MP3Player {
             player = new Player(BIS);
             songLength = FIS.available();
             path = mp3Path;
-
         } catch (FileNotFoundException | JavaLayerException ex) {
         } catch (IOException ex) {
         }
         new Thread() {
             @Override
             public void run() {
-                try {
+                try {                   
                     player.play();
                 } catch (JavaLayerException ex) {
                 }
@@ -57,9 +57,7 @@ public class MP3Player {
                 pausePoint = FIS.available();
                 player.close();
             } catch (IOException ex) {
-
             }
-
         }
     }
 
@@ -87,5 +85,8 @@ public class MP3Player {
     public long getPausePoint() {
         return pausePoint;
     }
-
+    
+    public String getPath(){
+        return path;
+    }
 }
