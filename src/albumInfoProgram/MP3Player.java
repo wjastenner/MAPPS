@@ -1,63 +1,91 @@
 package albumInfoProgram;
 
-import java.awt.Component;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import javax.swing.JFileChooser;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 public class MP3Player {
 
-    private String filename;
-    private Player player;
+    FileInputStream FIS;
+    BufferedInputStream BIS;
+    public Player player;
+    public long pausePoint;
+    public long songLength;
+    String path;
 
-    // a default constructor
-    public MP3Player() {
+    public MP3Player()
+    {
+        pausePoint = 0;
     }
 
-    // Constructor takes a given file name 
-    public MP3Player(String filename) {
-        this.filename = filename;
-    }
-
-    public void close() {
+    public void stop() {
         if (player != null) {
             player.close();
+            pausePoint = 0;
+            songLength = 0;
         }
     }
 
-    // play the JLayerMP3 file to the sound card
-    public void play() {
+    public void play(String mp3Path) {
         try {
-            FileInputStream fis = new FileInputStream(filename);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            player = new Player(bis);
-        } catch (Exception e) {
-            System.out.println("\n Problem in playing: " + filename);
-            System.out.println(e);
-        }
-    }
+            FIS = new FileInputStream(mp3Path);
+            BIS = new BufferedInputStream(FIS);
+            player = new Player(BIS);
+            songLength = FIS.available();
+            path = mp3Path;
 
-    public void play(String mp3filename) {
-        try {
-            FileInputStream fis = new FileInputStream(mp3filename);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            player = new Player(bis);
-        } catch (Exception e) {
-            System.out.println("Problem in playing: " + mp3filename);
-            System.out.println(e);
+        } catch (FileNotFoundException | JavaLayerException ex) {
+        } catch (IOException ex) {
         }
-
-        // creata a thread to play music in background
         new Thread() {
+            @Override
             public void run() {
                 try {
                     player.play();
-                } catch (Exception e) {
-                    System.out.println(e);
+                } catch (JavaLayerException ex) {
                 }
             }
         }.start();
     }
+
+    public void pause() {
+        if (player != null) {
+            try {
+                pausePoint = FIS.available();
+                player.close();
+            } catch (IOException ex) {
+
+            }
+
+        }
+    }
+
+    public void resume() {
+        try {
+            FIS = new FileInputStream(path);
+            BIS = new BufferedInputStream(FIS);
+            player = new Player(BIS);
+            FIS.skip(songLength - pausePoint);
+        } catch (JavaLayerException | FileNotFoundException ex) {
+        } catch (IOException ex) {
+        }
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    player.play();
+                } catch (JavaLayerException ex) {
+                }
+            }
+        }.start();
+
+    }
+
+    public long getPausePoint() {
+        return pausePoint;
+    }
+
 }
