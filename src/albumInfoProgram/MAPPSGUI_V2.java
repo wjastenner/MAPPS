@@ -96,20 +96,20 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         albumsTitle.setBackground(new java.awt.Color(0, 0, 0));
-        albumsTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        albumsTitle.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
         albumsTitle.setForeground(new java.awt.Color(255, 255, 255));
         albumsTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         albumsTitle.setText("ALBUMS");
         albumsTitle.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        albumDurationLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        albumDurationLBL.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         albumDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         albumDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         albumDurationLBL.setText("TRACKS: 00 | DURATION: 00:00:00");
         albumDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         albumNameCB.setBackground(new java.awt.Color(204, 204, 204));
-        albumNameCB.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        albumNameCB.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         albumNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         albumNameCB.setMaximumSize(new java.awt.Dimension(361, 30));
         albumNameCB.setMinimumSize(new java.awt.Dimension(361, 30));
@@ -124,7 +124,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumCoverImgLBL.setBackground(new java.awt.Color(0, 0, 0));
         albumCoverImgLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/unknown_album.jpg"))); // NOI18N
 
-        addTrackBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        addTrackBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
         addTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
         addTrackBTN.setText("ADD TRACK TO PLAYLIST");
         addTrackBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -133,10 +133,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane5.setBorder(null);
         jScrollPane5.setPreferredSize(new java.awt.Dimension(200, 132));
 
-        tracksList.setBackground(new java.awt.Color(204, 204, 204));
-        tracksList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        tracksList.setBackground(new java.awt.Color(51, 51, 51));
+        tracksList.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        tracksList.setForeground(new java.awt.Color(255, 255, 255));
         tracksList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tracksListMousePressed(evt);
@@ -184,14 +186,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         PLPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         PLTitle.setBackground(new java.awt.Color(70, 50, 70));
-        PLTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        PLTitle.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
         PLTitle.setForeground(new java.awt.Color(255, 255, 255));
         PLTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PLTitle.setText("PLAYLISTS");
         PLTitle.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         playlistNameCB.setBackground(new java.awt.Color(204, 204, 204));
-        playlistNameCB.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        playlistNameCB.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         playlistNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         playlistNameCB.setPreferredSize(new java.awt.Dimension(361, 26));
         playlistNameCB.addActionListener(new java.awt.event.ActionListener() {
@@ -200,10 +202,12 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane7.setBorder(null);
         jScrollPane7.setPreferredSize(new java.awt.Dimension(200, 132));
 
-        PLTList.setBackground(new java.awt.Color(204, 204, 204));
-        PLTList.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        PLTList.setBackground(new java.awt.Color(51, 51, 51));
+        PLTList.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        PLTList.setForeground(new java.awt.Color(255, 255, 255));
         PLTList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 PLTListMousePressed(evt);
@@ -211,13 +215,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(PLTList);
 
-        playlistDurationLBL.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        playlistDurationLBL.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         playlistDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         playlistDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         playlistDurationLBL.setText("TRACKS 00: | DURATION: 00:00:00");
         playlistDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        removeTrackBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        removeTrackBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
         removeTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
         removeTrackBTN.setText("REMOVE TRACK");
         removeTrackBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +230,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
-        savePLBTN.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        savePLBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
         savePLBTN.setForeground(new java.awt.Color(51, 51, 51));
         savePLBTN.setText("SAVE");
         savePLBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -297,41 +301,41 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
-        playerLBL2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        playerLBL2.setForeground(new java.awt.Color(51, 51, 51));
+        playerLBL2.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
+        playerLBL2.setForeground(new java.awt.Color(102, 102, 102));
         playerLBL2.setHorizontalTextPosition(JLabel.CENTER); playerLBL2.setVerticalTextPosition(JLabel.CENTER);
 
-        playerLBL1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        playerLBL1.setForeground(new java.awt.Color(51, 51, 51));
-        playerLBL2.setHorizontalTextPosition(JLabel.CENTER); playerLBL2.setVerticalTextPosition(JLabel.CENTER);
+        playerLBL1.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
+        playerLBL1.setForeground(new java.awt.Color(102, 102, 102));
+        playerLBL1.setHorizontalTextPosition(JLabel.CENTER); playerLBL1.setVerticalTextPosition(JLabel.CENTER);
 
         javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
         playerPanel.setLayout(playerPanelLayout);
         playerPanelLayout.setHorizontalGroup(
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playerPanelLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addComponent(playerLBL1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(stopBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(playBTN)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pauseBTN, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(playerLBL2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addComponent(playerLBL2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         playerPanelLayout.setVerticalGroup(
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerPanelLayout.createSequentialGroup()
-                .addGap(4, 4, 4)
+            .addGroup(playerPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(pauseBTN)
                     .addComponent(stopBTN)
                     .addComponent(playBTN)
                     .addComponent(playerLBL2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(playerLBL1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -933,7 +937,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         String albumInfo = "";
         String trackInfo = "";
         if (selectedTrack != null && selectedAlbum != null) {
-            albumInfo = selectedAlbum.getDetails().toUpperCase();
+            albumInfo = selectedAlbum.getArtist().toUpperCase();
             trackInfo = selectedTrack.getName().toUpperCase();
         } else if (selectedPLT != null && selectedPLT.getAlbumDetails() != null) {
             albumInfo = selectedPLT.getAlbumDetails().toUpperCase();
