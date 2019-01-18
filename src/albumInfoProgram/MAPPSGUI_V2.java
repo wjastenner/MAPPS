@@ -7,15 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javafx.application.Application;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 @SuppressWarnings("unchecked")
 
@@ -104,7 +102,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumDurationLBL.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         albumDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         albumDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        albumDurationLBL.setText("TRACKS: 00 | DURATION: 00:00:00");
+        albumDurationLBL.setText("TRACKS : 00 | DURATION : 00:00:00");
         albumDurationLBL.setEnabled(false);
         albumDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
@@ -223,7 +221,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         PLTDurationLBL.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
         PLTDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         PLTDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        PLTDurationLBL.setText("TRACKS 00: | DURATION: 00:00:00");
+        PLTDurationLBL.setText("TRACKS : 00 | DURATION : 00:00:00");
         PLTDurationLBL.setEnabled(false);
         PLTDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
@@ -567,7 +565,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
 
             String albumDuration = selectedAlbum.getDuration().toString();
-            albumDurationLBL.setText("TRACKS: " + selectedAlbum.getSize() + " | DURATION: " + selectedAlbum.getDuration());
+            albumDurationLBL.setText("TRACKS : " + selectedAlbum.getSize() + " | DURATION : " + selectedAlbum.getDuration());
 
             String selectedAlbumTitle = selectedAlbum.getTitle().toUpperCase();
 
@@ -664,7 +662,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                         Object[] options = {"Load New Album Collection", "Proceed", "Cancel"};
                         int input = JOptionPane.showOptionDialog(mainPanel,
                                 "The playlist contains some tracks that can not be found in the album collection.\n"
-                                + "These tracks can not be loaded but by proceeding will be removed permanently from the playlist.",
+                                + "These tracks can not be loaded and by proceeding will be removed permanently from the playlist.",
                                 "Unable to find tracks",
                                 JOptionPane.YES_NO_CANCEL_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,
@@ -715,8 +713,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             renamePLMI.setEnabled(true);
             removePLMI.setEnabled(true);
             savePLBTN.setEnabled(true);
-        }
-        else{
+        } else {
             savePLMI.setEnabled(false);
             addTrackBTN.setEnabled(false);
             editMenuPL.setEnabled(false);
@@ -736,21 +733,34 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             PLTList.setEnabled(false);
             PLTDurationLBL.setEnabled(false);
         }
-        
-        if(playlists.size() <= 1){
+
+        if (playlists.size() <= 1) {
             PLNameCB.setEnabled(false);
-        }
-        else if(playlists.size() > 1){
+        } else if (playlists.size() > 1) {
             PLNameCB.setEnabled(true);
         }
     }
 
     public void addPLName(String playlistName, String playlistPath) {
+
         playlists.put(playlistName, playlistPath);
         playlistName = playlistName.substring(0, (playlistName.length() - 4));
-        PLNameCB.addItem(playlistName);
-        PLNameCB.setSelectedItem(playlistName);
+
+        ArrayList<String> PLNameCBContents = new ArrayList<>();
+
+        int size = PLNameCB.getItemCount();
+        for (int i = 0; i < size; i++) {
+            String item = PLNameCB.getItemAt(i);
+            PLNameCBContents.add(item);
+        }
+
+        if (!PLNameCBContents.contains(playlistName)) {
+            PLNameCB.addItem(playlistName);
+            PLNameCB.setSelectedItem(playlistName);
+        }
+        
         displayPLDetails();
+
     }
 
     private void displayPLDetails() {
@@ -762,8 +772,8 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
         String playlistDuration = playlist.getDuration().toString();
 
-        PLTDurationLBL.setText("TRACKS: " + playlist.getSize() + " | DURATION: " + playlistDuration);
-        
+        PLTDurationLBL.setText("TRACKS : " + playlist.getSize() + " | DURATION : " + playlistDuration);
+
         checkPLFunctions();
 
     }
@@ -883,13 +893,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             File newFile = new File(path);
             if (file.exists()) {
                 int input = JOptionPane.showConfirmDialog(mainPanel, "This playlist already exists. Would you like to overwrite it?",
-                        "Duplicate tracks found", JOptionPane.YES_NO_OPTION);
+                        "Playlist already exists", JOptionPane.YES_NO_OPTION);
                 if (input == JOptionPane.YES_OPTION) {
                     try {
                         FileWriter finalFile = new FileWriter(path);
                         finalFile.close();
+                        playlists.remove(newFile.getName());
                         addPLName(newFile.getName(), newFile.getAbsolutePath());
-
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -904,6 +914,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 }
             }
         }
+
         checkPLFunctions();
     }
 
@@ -1094,7 +1105,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             playlist.clear();
             displayPLDetails();
         }
-        
+
         checkPLFunctions();
 
     }//GEN-LAST:event_removePLMIActionPerformed

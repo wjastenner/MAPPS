@@ -310,7 +310,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="TRACKS: 00 | DURATION: 00:00:00"/>
+                <Property name="text" type="java.lang.String" value="TRACKS : 00 | DURATION : 00:00:00"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
@@ -561,7 +561,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="TRACKS 00: | DURATION: 00:00:00"/>
+                <Property name="text" type="java.lang.String" value="TRACKS : 00 | DURATION : 00:00:00"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
