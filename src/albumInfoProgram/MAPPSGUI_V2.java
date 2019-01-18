@@ -955,8 +955,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
 
         if (ac.toString().isEmpty()) {
             JOptionPane.showMessageDialog(mainPanel, "Please load in an album collection.");
-        } else if (tracksSelected.size() > 1 || PLTSelected.size() > 1) {
-            JOptionPane.showMessageDialog(mainPanel, "Please select one track.");
         } else if (selectedTrack == null && selectedPLT == null && playerStatus.equals("deactivated")) {
             JOptionPane.showMessageDialog(mainPanel, "Please select a track.");
         }
@@ -999,9 +997,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         artist = artist.replaceAll("'", "").replaceAll("&", "__").replaceAll(" ", "_");
         trackNumber = "_-_" + trackNumber + "_-_";
         trackTitle = trackTitle.trim().replaceAll(" ", "_") + ".mp3";
-        String selectedTrackEdit = (artist + trackNumber + trackTitle).toUpperCase();         
+        String selectedTrackEdit = (artist + trackNumber + trackTitle).toUpperCase();
         File[] mp3Files = new File(directory).listFiles();
-        for (File mp3File : mp3Files) {           
+        for (File mp3File : mp3Files) {
             String mp3FileEdit = mp3File.getName().toUpperCase();
             if (mp3File.getName().toUpperCase().equals(selectedTrackEdit)) {
                 return mp3File.getAbsolutePath();
@@ -1134,50 +1132,52 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
     }//GEN-LAST:event_savePLBTNActionPerformed
 
     private void playBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playBTNMouseReleased
-
         String[] playingDetails = getPlayingDetails();
-
-        String mp3Directory = getMP3Directory();
-
-        switch (playerStatus) {
-            case "deactivated":
-                if (!mp3Directory.equals("unknown")) {
-                    mp3Player.play(getMP3Directory());
-                    playerStatus = "playing";
-                    playerLBL1.setText(playingDetails[0]);
-                    playerLBL2.setText(playingDetails[1]);
+        if (tracksList.getSelectedIndices().length > 1 || PLTList.getSelectedIndices().length > 1) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select one track.");
+        } else {
+            try {
+                String mp3Directory = getMP3Directory();
+                switch (playerStatus) {
+                    case "deactivated":
+                        if (!mp3Directory.equals("unknown")) {
+                            mp3Player.play(getMP3Directory());
+                            playerStatus = "playing";
+                            playerLBL1.setText(playingDetails[0]);
+                            playerLBL2.setText(playingDetails[1]);
+                        }
+                        break;
+                    case "playing":
+                        if (!mp3Player.getPath().equals(mp3Directory) && !mp3Directory.equals("unknown")) {
+                            mp3Player.stop();
+                            mp3Player.play(getMP3Directory());
+                            playerLBL1.setText(playingDetails[0]);
+                            playerLBL2.setText(playingDetails[1]);
+                        } else if (mp3Player.getPath().equals(mp3Directory) && !mp3Directory.equals("unknown")) {
+                            mp3Player.stop();
+                            mp3Player.play(getMP3Directory());
+                        }
+                        break;
+                    case "paused":
+                        mp3Player.resume();
+                        playerStatus = "playing";
+                        break;
+                    case "stopped":
+                        if (!mp3Directory.equals("unknown")) {
+                            mp3Player.play(mp3Directory);
+                            playerStatus = "playing";
+                            playerLBL1.setText(playingDetails[0]);
+                            playerLBL2.setText(playingDetails[1]);
+                        }
+                        break;
                 }
-                break;
-            case "playing":
-                if (!mp3Player.getPath().equals(mp3Directory) && !mp3Directory.equals("unknown")) {
-                    mp3Player.stop();
-                    mp3Player.play(getMP3Directory());
-                    playerLBL1.setText(playingDetails[0]);
-                    playerLBL2.setText(playingDetails[1]);
-                } else if (mp3Player.getPath().equals(mp3Directory) && !mp3Directory.equals("unknown")) {
-                    mp3Player.stop();
-                    mp3Player.play(getMP3Directory());
-                }
-                break;
-            case "paused":
-                mp3Player.resume();
-                playerStatus = "playing";
-                break;
-            case "stopped":
-                if (!mp3Directory.equals("unknown")) {
-                    mp3Player.play(mp3Directory);
-                    playerStatus = "playing";
-                    playerLBL1.setText(playingDetails[0]);
-                    playerLBL2.setText(playingDetails[1]);
-                }
-                break;
+            } catch (Exception e) {
+            }
+            System.out.println(playerStatus);
         }
-
-        System.out.println(playerStatus);
     }//GEN-LAST:event_playBTNMouseReleased
 
     private void stopBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopBTNMouseReleased
-
         switch (playerStatus) {
             case "deactivated":
                 break;
@@ -1196,12 +1196,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             case "stopped":
                 break;
         }
-
-        System.out.println(playerStatus);
     }//GEN-LAST:event_stopBTNMouseReleased
 
     private void pauseBTNMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseBTNMouseReleased
-
         switch (playerStatus) {
             case "playing":
                 mp3Player.pause();
@@ -1210,8 +1207,6 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 PLTList.clearSelection();
                 break;
         }
-
-        System.out.println(playerStatus);
     }//GEN-LAST:event_pauseBTNMouseReleased
 
     public static void main(String args[]) {
