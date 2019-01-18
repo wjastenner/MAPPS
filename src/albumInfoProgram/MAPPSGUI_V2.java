@@ -31,11 +31,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         initComponents();
         ac = new AlbumCollection();
         playlists = new HashMap<>();
-        albumCoverDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "images";
-        mp3AlbumDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "albums";
+        albumCoverDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "album_covers";
+        mp3AlbumDirectory = System.getProperty("user.dir") + File.separator + "data" + File.separator + "mp3_files";
         playlist = new Playlist(ac);
         mp3Player = new MP3Player();
         playerStatus = "deactivated";
+        System.out.println(albumCoverDirectory);
+        System.out.println(mp3AlbumDirectory);
     }
 
     @SuppressWarnings("unchecked")
@@ -93,13 +95,13 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         albumsTitle.setBackground(new java.awt.Color(0, 0, 0));
-        albumsTitle.setFont(new java.awt.Font("Impact", 1, 24)); // NOI18N
+        albumsTitle.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         albumsTitle.setForeground(new java.awt.Color(255, 255, 255));
         albumsTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         albumsTitle.setText("ALBUMS");
         albumsTitle.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        albumDurationLBL.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        albumDurationLBL.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         albumDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         albumDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         albumDurationLBL.setText("TRACKS : 00 | DURATION : 00:00:00");
@@ -107,7 +109,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         albumNameCB.setBackground(new java.awt.Color(204, 204, 204));
-        albumNameCB.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        albumNameCB.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         albumNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         albumNameCB.setEnabled(false);
         albumNameCB.setMaximumSize(new java.awt.Dimension(361, 30));
@@ -123,7 +125,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         albumCoverImgLBL.setBackground(new java.awt.Color(0, 0, 0));
         albumCoverImgLBL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/albumInfoProgram/unknown_album.jpg"))); // NOI18N
 
-        addTrackBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
+        addTrackBTN.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         addTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
         addTrackBTN.setText("ADD TRACK TO PLAYLIST");
         addTrackBTN.setEnabled(false);
@@ -137,7 +139,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jScrollPane5.setPreferredSize(new java.awt.Dimension(200, 132));
 
         tracksList.setBackground(new java.awt.Color(51, 51, 51));
-        tracksList.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        tracksList.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         tracksList.setForeground(new java.awt.Color(255, 255, 255));
         tracksList.setEnabled(false);
         tracksList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -171,7 +173,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(albumsTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(albumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(albumPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(albumPanelLayout.createSequentialGroup()
                         .addComponent(albumNameCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,21 +182,21 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(addTrackBTN))
-                    .addComponent(albumCoverImgLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(albumCoverImgLBL))
                 .addGap(14, 14, 14))
         );
 
         PLPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         PLTitle.setBackground(new java.awt.Color(70, 50, 70));
-        PLTitle.setFont(new java.awt.Font("Impact", 1, 24)); // NOI18N
+        PLTitle.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         PLTitle.setForeground(new java.awt.Color(255, 255, 255));
         PLTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PLTitle.setText("PLAYLISTS");
         PLTitle.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         PLNameCB.setBackground(new java.awt.Color(204, 204, 204));
-        PLNameCB.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        PLNameCB.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         PLNameCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         PLNameCB.setEnabled(false);
         PLNameCB.setPreferredSize(new java.awt.Dimension(361, 26));
@@ -208,7 +210,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         jScrollPane7.setPreferredSize(new java.awt.Dimension(200, 132));
 
         PLTList.setBackground(new java.awt.Color(51, 51, 51));
-        PLTList.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        PLTList.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         PLTList.setForeground(new java.awt.Color(255, 255, 255));
         PLTList.setEnabled(false);
         PLTList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,14 +220,14 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(PLTList);
 
-        PLTDurationLBL.setFont(new java.awt.Font("Impact", 1, 18)); // NOI18N
+        PLTDurationLBL.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         PLTDurationLBL.setForeground(new java.awt.Color(255, 255, 255));
         PLTDurationLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PLTDurationLBL.setText("TRACKS : 00 | DURATION : 00:00:00");
         PLTDurationLBL.setEnabled(false);
         PLTDurationLBL.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
-        removeTrackBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
+        removeTrackBTN.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         removeTrackBTN.setForeground(new java.awt.Color(51, 51, 51));
         removeTrackBTN.setText("REMOVE TRACK");
         removeTrackBTN.setEnabled(false);
@@ -235,7 +237,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
-        savePLBTN.setFont(new java.awt.Font("Impact", 1, 16)); // NOI18N
+        savePLBTN.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 18)); // NOI18N
         savePLBTN.setForeground(new java.awt.Color(51, 51, 51));
         savePLBTN.setText("SAVE");
         savePLBTN.setEnabled(false);
@@ -310,11 +312,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             }
         });
 
-        playerLBL2.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
+        playerLBL2.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 20)); // NOI18N
         playerLBL2.setForeground(new java.awt.Color(102, 102, 102));
         playerLBL2.setHorizontalTextPosition(JLabel.CENTER); playerLBL2.setVerticalTextPosition(JLabel.CENTER);
 
-        playerLBL1.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
+        playerLBL1.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 20)); // NOI18N
         playerLBL1.setForeground(new java.awt.Color(102, 102, 102));
         playerLBL1.setHorizontalTextPosition(JLabel.CENTER); playerLBL1.setVerticalTextPosition(JLabel.CENTER);
 
