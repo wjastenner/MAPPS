@@ -758,7 +758,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
             PLNameCB.addItem(playlistName);
             PLNameCB.setSelectedItem(playlistName);
         }
-        
+
         displayPLDetails();
 
     }
@@ -999,13 +999,11 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         artist = artist.replaceAll("'", "").replaceAll("&", "__").replaceAll(" ", "_");
         trackNumber = "_-_" + trackNumber + "_-_";
         trackTitle = trackTitle.trim().replaceAll(" ", "_") + ".mp3";
-        String selectedTrackEdit = artist + trackNumber + trackTitle;
-
+        String selectedTrackEdit = (artist + trackNumber + trackTitle).toUpperCase();         
         File[] mp3Files = new File(directory).listFiles();
-
-        for (File mp3File : mp3Files) {
-
-            if (mp3File.getName().equals(selectedTrackEdit)) {
+        for (File mp3File : mp3Files) {           
+            String mp3FileEdit = mp3File.getName().toUpperCase();
+            if (mp3File.getName().toUpperCase().equals(selectedTrackEdit)) {
                 return mp3File.getAbsolutePath();
             }
         }
@@ -1156,6 +1154,9 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
                     mp3Player.play(getMP3Directory());
                     playerLBL1.setText(playingDetails[0]);
                     playerLBL2.setText(playingDetails[1]);
+                } else if (mp3Player.getPath().equals(mp3Directory) && !mp3Directory.equals("unknown")) {
+                    mp3Player.stop();
+                    mp3Player.play(getMP3Directory());
                 }
                 break;
             case "paused":
