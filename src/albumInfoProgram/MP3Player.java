@@ -9,12 +9,12 @@ import javazoom.jl.player.Player;
 
 public class MP3Player {
 
-    FileInputStream FIS;
-    BufferedInputStream BIS;
-    public Player player;
+    private FileInputStream FIS;
+    private BufferedInputStream BIS;
+    private Player player;
     public long pausePoint;
     public long songLength;
-    String path;
+    private String path;
 
     public MP3Player()
     {

@@ -3,7 +3,6 @@ package albumInfoProgram;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import static java.util.Comparator.comparing;
 import java.util.List;
 import static java.util.Comparator.comparing;
 
