@@ -520,7 +520,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public int loadAC() {
+    private int loadAC() {
         int result = 0;
         String openLocation = System.getProperty("user.dir");
         JFileChooser fc = new JFileChooser(openLocation);
@@ -559,7 +559,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }
 
-    public void displayAlbumDetails() {
+    private void displayAlbumDetails() {
         if (albumNameCB.getItemCount() > 0) {
 
             Album selectedAlbum = (Album) albumNameCB.getSelectedItem();
@@ -647,7 +647,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }
 
-    public void loadPL() {
+    private void loadPL() {
         String openLocation = System.getProperty("user.dir");
         JFileChooser fc = new JFileChooser(openLocation);
         fc.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
@@ -711,7 +711,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         checkPLFunctions();
     }
 
-    public void checkPLFunctions() {
+    private void checkPLFunctions() {
 
         if (!playlists.isEmpty()) {
             savePLMI.setEnabled(true);
@@ -748,7 +748,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
     }
 
-    public void addPLName(String playlistName, String playlistPath) {
+    private void addPLName(String playlistName, String playlistPath) {
 
         playlists.put(playlistName, playlistPath);
         playlistName = playlistName.substring(0, (playlistName.length() - 4));

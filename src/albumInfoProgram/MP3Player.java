@@ -12,8 +12,8 @@ public class MP3Player {
     private FileInputStream FIS;
     private BufferedInputStream BIS;
     private Player player;
-    public long pausePoint;
-    public long songLength;
+    private long pausePoint;
+    private long songLength;
     private String path;
 
     public MP3Player()
