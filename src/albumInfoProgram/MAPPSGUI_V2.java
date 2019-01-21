@@ -999,7 +999,7 @@ public class MAPPSGUI_V2 extends javax.swing.JFrame {
         }
         return albumFolderDirectory;
     }
-
+    
     private String getTrackDirectory(String directory, String artist, String trackNumber, String trackTitle) {
         artist = artist.replaceAll("'", "").replaceAll("&", "__").replaceAll(" ", "_");
         trackNumber = "_-_" + trackNumber + "_-_";
