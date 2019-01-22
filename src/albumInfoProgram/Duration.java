@@ -95,5 +95,31 @@ public class Duration implements Comparable<Duration> {
     @Override
     public int compareTo(Duration other) {
         return Integer.compare(this.toSeconds(), other.toSeconds());
-    } 
+    }
+    
+//    public static void main(String args[]) {
+//        
+//        // default duration
+//        Duration duration1 = new Duration();
+//        System.out.println(duration1);
+//        
+//        // three integer duration
+//        Duration duration2 = new Duration(1,2,3);
+//        System.out.println(duration2);
+//        
+//        // string duration
+//        Duration duration3 = new Duration("5:6:7");
+//        
+//        // toSeconds
+//        System.out.println(duration3.toSeconds());
+//        
+//        // add two durations
+//        duration2.add(duration3);
+//        System.out.println(duration2);
+//        
+//        // compare two durations
+//        System.out.println(duration2.equals(duration3));     
+//    
+//    }
+    
 }

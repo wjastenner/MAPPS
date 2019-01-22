@@ -45,7 +45,7 @@ public class MP3Player {
             public void run() {
                 try {                   
                     player.play();
-                } catch (JavaLayerException ex) {
+                } catch (Exception ex) {
                 }
             }
         }.start();
